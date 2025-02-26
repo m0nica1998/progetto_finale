@@ -1,0 +1,448 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  box-sizing: border-box;
+}
+h3 {
+  color: black !important;
+  font-weight: bold;
+}
+.custom-container {
+  width: 90%;
+  max-width: 1200px;
+  background-color: lightgray;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  border: 1px solid gray !important;
+  
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Occupa tutta l'altezza della viewport */
+  width: 100%;
+}
+
+.titolo {
+  font-weight: bold !important;
+  color: rgb(156, 12, 12) !important;
+  
+}
+.pianta {
+  background-image: url(imgs/foglia.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  
+}
+.borsa {
+  background-image: url(imgs/borsa.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  
+}
+.form-contatti{
+  max-width: 720px;
+}
+
+.gioiello{
+  background-image: url(imgs/gioiello.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+.search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050; /* Sopra la navbar */
+}
+
+
+.search-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 400px;
+  text-align: center;
+}
+.card-equal-height {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.search{
+    color: lightgray !important;
+    background-color: rgb(156, 12, 12)!important;
+}
+.bg-gray {
+  background-color: gray !important;
+}
+.bg-light-gray {
+  background-color: lightgrey !important;
+}
+.social-media-reset-pass {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+
+input[type="submit"] {
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  outline: none;
+  align-items: center;
+  width: 100px;
+ 
+}
+
+input[type="submit"]:hover {
+  background-color: rgb(156, 12, 12);
+  
+}
+
+
+
+.color-lgray {
+  color: lightgray;
+}
+
+.td-none {
+  text-decoration: none;
+}
+
+.hoverRed:hover {
+  color: rgb(156, 12, 12);
+}
+
+.container-logo {
+  background-image: url(imgs/logo.avif);
+  width: 100px;
+  height: 100px;
+  background-size: contain;
+  transition: transform 0.3s ease;
+}
+
+.container-logo:hover {
+  transform: scale(1.1);
+}
+.main-homepage{
+  background-image: url('imgs/carousel1.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  position: relative;
+  margin-top: 120px;
+}
+.main-shop-piante,.main-contatti ,.main-carello  ,.main-login,.main-reset-pass,.main-shop-borse,.main-shop-gioielli, .main-utente{
+  margin-top: 120px;
+}
+
+.form-utente {
+  min-height: 300px !important;
+
+}
+
+.h-10 {
+  height: 2.2rem;
+}
+
+.main-checkout{
+  margin-top: 150px;
+
+}
+.overlay {
+  opacity: 0.5;
+  background-color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+.divider {
+  width: 70%;
+  height: 1px;
+  background-color: black;
+  margin: 20px auto;
+}
+.icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: gray;
+}
+.social-icon {
+  width: 30px;
+  height: 30px;
+  margin-top: 10px;
+  transition: transform 0.3s ease;
+  border-radius: 50%;
+}
+.social-icon:hover {
+  transform: scale(1.2);
+}
+.container-login {
+  max-width: 600px;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+}
+.btn-custom {
+  border-radius: 10px;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn-custom:hover {
+  background-color: rgb(156, 12, 12);
+}
+.opacizzata {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.carousel-image {
+  max-height: 300px;
+  object-fit: cover;
+}
+.header-card {
+  border: 2px solid white; 
+  border-radius: 10px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+ }
+
+.img {
+  width: 250px;
+  margin-top: 20px;
+  border-radius: 25px;
+  margin-bottom: 20px;
+  z-index: 1;
+  max-width: 100%;
+}
+
+.opaca {
+  
+  filter: blur(5px); /* Sfocatura dell'immagine */
+}
+
+.container-foglia {
+  background-image: url(imgs/foglia.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  
+}
+
+.text {
+  font-size: 20px;
+  padding-top: 20px;
+
+}
+
+.info-menu {
+  color: rgb(156, 12, 12);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn-shop {
+  border: 2px solid gray !important;
+  background-color: white;
+  color: black;
+  padding: 10px 24px !important;
+  font-size: 40px;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  font-weight: bold !important;
+  transition: transform 0.3s;
+}
+
+.btn-shop:hover {
+transform: scale(1.05);
+}
+
+
+@media (max-width:768px) {
+  .custom-container {
+    width: 80%;
+  }
+}
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 1024px) { 
+  .testo-titolo {
+      font-size: 1.5rem !important;
+  }
+  
+}
+
+@media (max-width: 1023px) { 
+  .testo-titolo {
+      font-size: 1rem !important;
+  }
+  
+}
+
+.ribbon {
+  width: 80px;
+  font-size: 16px;
+  padding: 4px;
+  position: absolute;
+  right: -2px;
+  top: 10px;
+  text-align: center;
+  border-radius: 25px;
+  transform: rotate(30deg);
+  color: white;
+  font-weight: bold;
+  z-index: 10; /* Assicurati che sia sopra l'immagine */
+}
+
+.bg-green {
+  background-color: green;
+}
+
+.bg-orange {
+  background-color: orange;
+}
+
+
+@media (max-width: 768px) {
+  .container-login {
+    width: 80%;
+  }
+}
+
+@media (max-width: 578px) {
+  .container-login {
+    width: 90%;
+  }
+}
+/* FOOTER */
+footer {
+  background-color: gray;
+  width: 100%;
+  padding: 20px 40px; /* Margine interno per più spazio */
+  color: lightgray;
+  margin-top: 30px;
+}
+
+
+
+.social-media {
+  margin-top: 20px;          /* Distanza tra il contenuto principale e le icone */
+}
+
+.facebook-logo, .whatsapp-icon {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s ease;
+  border-radius: 100px;
+}
+
+.facebook-logo:hover, .whatsapp-icon:hover {
+  transform: scale(1.2); /* Aumenta leggermente la dimensione al passaggio del mouse */
+}
+
+footer a {
+  text-decoration: none;
+  color: rgb(156, 12, 12); /* Colore link nel footer */
+}
+
+.map-container {
+  position: relative;
+  text-align: center;
+  
+}
+
+.map-container iframe {
+  border-radius: 10px;
+}
+
+.map-link {
+  display: block;
+  margin-top: 10px;
+  text-decoration: none;
+  color: rgb(156, 12, 12);
+  font-weight: bold;
+}
+
+.admin-header {
+  position: relative;
+  z-index: 10;
+  background-color: white;
+  padding: 50px 0;
+}
+
+.admin-main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  max-width: 800px;
+  
+}
+
+.admin-body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  
+}
+
+.admin-btn {
+  flex: 1 1 calc(33.333% - 20px); /* Tre colonne su desktop */
+  padding: 15px;
+  font-size: 16px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.admin-btn:hover {
+  background-color: rgb(156, 12, 12) !important;
+}
+
+@media (max-width: 768px) {
+  .admin-btn {
+      flex: 1 1 calc(50% - 20px); /* Due colonne su tablet */
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-btn {
+      flex: 1 1 100%; /* Una colonna su mobile */
+  }
+}
+
+
+
