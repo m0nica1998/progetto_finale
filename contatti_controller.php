@@ -1,5 +1,5 @@
 
-<!-- fare in modo che una volta compilato il form si venga reindirizzati alla pagina utente.php, fare in modo che i campi rimangano compilati quando c'è una compilazione incompleta -->
+
 
 <?php 
 session_start();
@@ -7,6 +7,7 @@ $_SESSION['errore'] = "";
 
 // Recupero dati form
 $nome = $_POST['nome_completo'] ?? '';
+$_SESSION['nome_completo'] = isset($_POST['nome_completo']) ? $_POST['nome_completo'] : "";
 $eta = $_POST['eta'] ?? '';
 $data = $_POST['data_nascita'] ?? '';
 $telefono = $_POST['telefono'] ?? '';
@@ -42,8 +43,8 @@ if (empty($nome)) {
 }
 
 if (!empty($_SESSION['errore'])) {
-    header("Location: contatti.php");
-    exit();
+  header("Location: contatti.php");
+   exit();
 }
 
 // Conversione genere
@@ -65,7 +66,7 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $_SESSION['errore'] = "Esiste già un account con questa email!";
     $connessione->close();
-    header("Location: contatti.php");
+   header("Location: contatti.php");
    exit();
 }
 
@@ -84,6 +85,6 @@ if ($stmt_insert->execute()) {
     exit();
 } else {
     $_SESSION['errore'] = "Errore nell'inserimento dei dati: " . $connessione->error;
-    header("Location: contatti.php");
-    exit();
+   header("Location: contatti.php");
+  exit();
 }

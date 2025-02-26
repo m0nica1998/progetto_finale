@@ -2,7 +2,7 @@
 session_start();
 $title = 'Contatti';
 $error = (isset($_SESSION['errore']) ) ? $_SESSION['errore'] : "";
-
+echo $_SESSION['nome_completo'];
  
 
 echo "errore: ". $error;
@@ -37,7 +37,9 @@ $success = '';
         <form id="registration-form" method="POST" class="" action="contatti_controller.php">
             <div class="mb-3">
                 <label for="nome_completo" class="form-label">Nome e Cognome</label>
-                <input type="text" class="form-control" id="nome_completo" name="nome_completo" placeholder="Inserisci qui il tuo nome completo" value="<?php echo isset($nome_completo) ? htmlspecialchars($nome_completo) : ''; ?>">
+                <input type="text" class="form-control" id="nome_completo" name="nome_completo" placeholder="Inserisci qui il tuo nome completo" value="<?php if(isset($_SESSION['nome_completo'])){
+                    echo $_SESSION['nome_completo'];
+                } ?>">
             </div>
             <div class="mb-3">
                 <label for="eta" class="form-label">Età</label>
