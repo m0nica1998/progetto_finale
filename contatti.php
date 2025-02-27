@@ -43,24 +43,34 @@ $success = '';
             </div>
             <div class="mb-3">
                 <label for="eta" class="form-label">Età</label>
-                <input type="number" class="form-control" id="eta" name="eta" min="0" placeholder="Inserisci la tua età" value="<?php echo isset($eta) ? htmlspecialchars($eta) : ''; ?>">
+                <input type="number" class="form-control" id="eta" name="eta" min="0" placeholder="Inserisci la tua età" value="<?php if(isset($_SESSION['eta'])){
+                    echo $_SESSION['eta'];
+                } ?>">
             </div>
             <div class="mb-3">
                 <label for="data_nascita" class="form-label">Data di Nascita</label>
-                <input type="date" class="form-control" id="data_nascita" name="data_nascita" value="<?php echo isset($data_nascita) ? htmlspecialchars($data_nascita) : ''; ?>">
+                <input type="date" class="form-control" id="data_nascita" name="data_nascita" value="<?php if(isset($_SESSION['data_nascita'])){
+                    echo $_SESSION['data_nascita'];
+                } ?>">
             </div>
             <div class="mb-3">
                 <label for="telefono" class="form-label">Telefono</label>
-                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Inserisci il tuo numero di telefono" value="<?php echo isset($telefono) ? htmlspecialchars($telefono) : ''; ?>">
+                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Inserisci il tuo numero di telefono" value="<?php if(isset($_SESSION['telefono'])){
+                    echo $_SESSION['telefono'];
+                } ?>">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Inserisci la tua email" value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Inserisci la tua email" value="<?php if(isset($_SESSION['email'])){
+                    echo $_SESSION['email'];
+                } ?>">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <div class="input-group">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Inserisci la password">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Inserisci la password" value="<?php if(isset($_SESSION['password'])){
+                    echo $_SESSION['password'];
+                } ?>">
                     <button class="btn btn-outline-secondary" type="button" id="toggle-password">👁️</button>
                 </div>
             </div>
@@ -76,7 +86,9 @@ $success = '';
             <div class="mb-3">
                 <label for="regione" class="form-label">Regione</label>
                 <select class="form-select" id="regione" name="regione">
-                    <option value="">Seleziona la tua regione</option>
+                    <option value="<?php if(isset($_SESSION['regione'])){
+                    echo $_SESSION['regione'];
+                } ?>">Seleziona la tua regione</option>
                    
                     <option value="Abruzzo" >Abruzzo</option>
     <option value="Basilicata" >Basilicata</option>

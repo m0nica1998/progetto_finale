@@ -5,16 +5,23 @@
 session_start();
 $_SESSION['errore'] = "";
 
-// Recupero dati form
+// Recupero dati form (modificare questo con operatore ternario e nell'altro file modificare value con if)
 $nome = $_POST['nome_completo'] ?? '';
 $_SESSION['nome_completo'] = isset($_POST['nome_completo']) ? $_POST['nome_completo'] : "";
 $eta = $_POST['eta'] ?? '';
+$_SESSION['eta'] = isset($_POST['eta']) ? $_POST['eta'] : "";
 $data = $_POST['data_nascita'] ?? '';
+$_SESSION['data_nascita'] = isset($_POST['data_nascita']) ? $_POST['data_nascita'] : "";
 $telefono = $_POST['telefono'] ?? '';
+$_SESSION['telefono'] = isset($_POST['telefono']) ? $_POST['telefono'] : "";
 $genere = $_POST['genere'] ?? '';
+$_SESSION['genere'] = isset($_POST['genere']) ? $_POST['genere'] : "";
 $regione = $_POST['regione'] ?? '';
+$_SESSION['regione'] = isset($_POST['regione']) ? $_POST['regione'] : "";
 $email = $_POST['email'] ?? '';
+$_SESSION['email'] = isset($_POST['email']) ? $_POST['email'] : "";
 $pass = $_POST['password'] ?? '';
+$_SESSION['password'] = isset($_POST['password']) ? $_POST['password'] : "";
 
 // Controllo dati form (regex)
 $pattern_email = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
