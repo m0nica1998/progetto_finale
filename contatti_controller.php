@@ -5,7 +5,7 @@
 session_start();
 $_SESSION['errore'] = "";
 
-// Recupero dati form (modificare questo con operatore ternario e nell'altro file modificare value con if)
+// Recupero dati form, faccio in modo ceh i dati rimangano inseiti quando si compila parzialmente il form e si preme registrati
 $nome = $_POST['nome_completo'] ?? '';
 $_SESSION['nome_completo'] = isset($_POST['nome_completo']) ? $_POST['nome_completo'] : "";
 $eta = $_POST['eta'] ?? '';
