@@ -44,7 +44,7 @@ session_start();
                             <h1 class="modal-title fs-5" id="modalAggiuntaProdottiLabel">Aggiungi prodotto</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="controller_prodotti.php?action=create" method="post">
+                        <form action="controller_prodotti.php?action=create" method="post" enctype="multipart/form-data">
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <label for="" class="form-label">Nome</label>
