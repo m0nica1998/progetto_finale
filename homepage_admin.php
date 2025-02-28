@@ -51,7 +51,7 @@ session_start();
                                     <span><?php echo "Errore" . $_SESSION['errore'] ?></span>
                                 <?php endif; ?>
                                 <?php if (isset($_SESSION['successo']) && $_SESSION['successo'] != null) : ?>
-                                    <span><?php echo "Caricamento avvenuto" . $_SESSION['successo'] ?></span>
+                                    <span><?php echo "Caricamento avvenuto. <br>" . $_SESSION['successo'] ?></span>
                                 <?php endif; ?>
                                 <div class="mb-3">
                                     <label for="" class="form-label">Nome</label>
@@ -89,7 +89,7 @@ session_start();
                                         name="immagine"
                                         id="immagine"
                                         placeholder="Immagine prodotto"
-                                        aria-describedby="fileHelpId" />
+                                        aria-describedby="fileHelpId" required/>
 
                                 </div>
                                 <div class="mb-3">
