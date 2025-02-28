@@ -1,4 +1,5 @@
 <?php
+//fare controllo immmagine e limite peso file imm.
 session_start();
 // selettore di metodi CRUD
 $action = $_GET['action'];
@@ -15,8 +16,7 @@ function create()
   $nome_prodotto = $_POST['nome_prodotto'];
   $prezzo = $_POST['prezzo'];
   $tipo = $_POST['tipo'];
-  //$immagine = $_POST['immagine'];
-  // $fileData = $_POST['file_data'];
+  
   $disp_magazzino = $_POST['disp_magazzino'];
 
   // Nome del file
@@ -46,11 +46,7 @@ function create()
   if (!($disp_magazzino >= 0)) {
     $_SESSION['errore'] = "la disponibilità non è corretta ";
   }
-  /*if (!empty($filename) && !empty($filedata)) {
-    $_SESSION['errore'] = "seleziona una immagine";
-    echo $filename . "<br>";
-    echo $filedata;
-  }*/
+ 
   if (isset($_SESSION['errore']) && ($_SESSION['errore'] != "")) {
     header('Location: utente.php');
     exit();
