@@ -46,6 +46,10 @@ session_start();
                         </div>
                         <form action="controller_prodotti.php?action=create" method="post" enctype="multipart/form-data">
                             <div class="modal-body">
+                                
+                                <?php if (isset($_SESSION['errore']) && $_SESSION['errore'] != null) : ?>
+                                    <span><?php echo "Errore" . $_SESSION['errore'] ?></span>
+                                <?php endif; ?>
                                 <div class="mb-3">
                                     <label for="" class="form-label">Nome</label>
                                     <input
@@ -55,20 +59,19 @@ session_start();
                                         id="nome_prodotto"
                                         aria-describedby="helpId"
                                         placeholder="Nome prodotto" />
-                                    
+
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text">€</span>
                                     <input type="number" id="prezzo" name="prezzo" class="form-control" aria-label="Amount (to the nearest dollar)">
-                                    
+
                                 </div>
                                 <div class="mb-3">
                                     <label for="" class="form-label">Tipo</label>
                                     <select
                                         class="form-select form-select-lg"
                                         name="tipo"
-                                        id="tipo"
-                                    >
+                                        id="tipo">
                                         <option selected>Seleziona uno</option>
                                         <option value="piante">Piante</option>
                                         <option value="borse">Borse</option>
@@ -83,9 +86,8 @@ session_start();
                                         name="immagine"
                                         id="immagine"
                                         placeholder="Immagine prodotto"
-                                        aria-describedby="fileHelpId"
-                                    />
-                                    
+                                        aria-describedby="fileHelpId" />
+
                                 </div>
                                 <div class="mb-3">
                                     <label for="" class="form-label">Disponibilità magazzino</label>
@@ -95,11 +97,10 @@ session_start();
                                         name="disp_magazzino"
                                         id="disp_magazzino"
                                         aria-describedby="helpId"
-                                        placeholder=""
-                                    />
-                                    
+                                        placeholder="" />
+
                                 </div>
-                                
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
