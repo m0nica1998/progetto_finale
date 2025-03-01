@@ -7,6 +7,8 @@ if ($action == 'create') {
   create();
 } elseif($action == 'showAll'){
   showAll();
+} elseif($action == 'delete'){
+  delete();
 }
 
 
@@ -98,6 +100,7 @@ function showAll (){
         while ($row = $result->fetch_assoc()){
           if($row['tipo'] == "piante"){
             $pianta = [
+              "id" => $row['id'],
               "nome" => $row['nome'],
               "tipo" => "piante",
               "prezzo" => $row['prezzo'],
@@ -109,6 +112,7 @@ function showAll (){
             array_push($piante, $pianta);
           } elseif($row['tipo'] == "borse"){
             $borsa = [
+              "id" => $row['id'],
               "nome" => $row['nome'],
               "tipo" => "borse",
               "prezzo" => $row['prezzo'],
@@ -120,6 +124,7 @@ function showAll (){
             array_push($borse, $borsa);
           } else { 
             $gioiello = [
+              "id" => $row['id'],
               "nome" => $row['nome'],
               "tipo" => "gioielli",
               "prezzo" => $row['prezzo'],
@@ -146,6 +151,11 @@ function showAll (){
          exit();
       }}
       
+}
+
+function delete(){
+  $id = $_GET['id'];
+  echo $id;
 }
 
 
