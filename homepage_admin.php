@@ -263,13 +263,13 @@ session_start();
                                                         </div>
 
                                                         <script>
-                                                            var modalModificaId = document.getElementById('modalModificaId');
+                                                            var modalModificaId<?php echo $_SESSION['piante'][$i]['id'] ?> = document.getElementById('modalModificaId<?php echo $_SESSION['piante'][$i]['id'] ?>');
 
-                                                            modalModificaId.addEventListener('show.bs.modal', function(event) {
+                                                            modalModificaId<?php echo $_SESSION['piante'][$i]['id'] ?>.addEventListener('show.bs.modal', function(event) {
                                                                 // Button that triggered the modal
-                                                                let button = event.relatedTarget;
+                                                                let button<?php echo $_SESSION['piante'][$i]['id'] ?> = event.relatedTarget;
                                                                 // Extract info from data-bs-* attributes
-                                                                let recipient = button.getAttribute('data-bs-whatever');
+                                                                let recipient<?php echo $_SESSION['piante'][$i]['id'] ?> = button.getAttribute('data-bs-whatever');
 
                                                                 // Use above variables to manipulate the DOM
                                                             });
