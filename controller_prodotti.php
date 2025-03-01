@@ -5,7 +5,10 @@ session_start();
 $action = $_GET['action'];
 if ($action == 'create') {
   create();
+} elseif($action == 'showAll'){
+  showAll();
 }
+
 
 
 function create()
@@ -74,4 +77,27 @@ function create()
     header("Location: utente.php");
     exit();
   }
+}
+
+function showAll (){
+
+    // Connessione al DB
+    $connessione = new mysqli('localhost', 'root', 'root', 'db_tabacchi');
+    if ($connessione->connect_error) {
+      die("Errore di connessione: " . $connessione->connect_error);
+    }
+
+    $query = "SELECT id, nome, tipo, prezzo, immagine, fileData, disp_magazzino FROM prodotti";
+    if ($result = $connessione -> query($query)) {
+    
+      //verifica se sono presenti dati nella tabella
+      if($result -> num_rows > 0) { 
+         var_dump($result);
+         var_dump($result[0]);
+      } else {
+         $_SESSION['errore'] = "Non ci sono prodotti nel sistema";
+         header('Location: utente.php');
+         exit();
+      }}
+      
 }
