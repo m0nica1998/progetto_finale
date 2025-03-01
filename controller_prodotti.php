@@ -92,8 +92,54 @@ function showAll (){
     
       //verifica se sono presenti dati nella tabella
       if($result -> num_rows > 0) { 
-         var_dump($result);
-         var_dump($result[0]);
+        $piante = [];
+        $borse = [];
+        $gioielli = [];
+        while ($row = $result->fetch_assoc()){
+          if($row['tipo'] == "piante"){
+            $pianta = [
+              "nome" => $row['nome'],
+              "tipo" => "piante",
+              "prezzo" => $row['prezzo'],
+              "immagine" => $row['immagine'],
+              "fileData" => $row['fileData'],
+              "disp_magazzino" => $row['disp_magazzino']
+
+            ];
+            array_push($piante, $pianta);
+          } elseif($row['tipo'] == "borse"){
+            $borsa = [
+              "nome" => $row['nome'],
+              "tipo" => "borse",
+              "prezzo" => $row['prezzo'],
+              "immagine" => $row['immagine'],
+              "fileData" => $row['fileData'],
+              "disp_magazzino" => $row['disp_magazzino']
+
+            ];
+            array_push($borse, $borsa);
+          } else { 
+            $gioiello = [
+              "nome" => $row['nome'],
+              "tipo" => "gioielli",
+              "prezzo" => $row['prezzo'],
+              "immagine" => $row['immagine'],
+              "fileData" => $row['fileData'],
+              "disp_magazzino" => $row['disp_magazzino']
+
+            ];
+            array_push($gioielli, $gioiello);
+
+          }
+        }
+        var_dump($borse);
+        var_dump($piante);
+        var_dump($gioielli);
+       $_SESSION['piante'] = $piante;
+       $_SESSION['borse'] = $borse;
+       $_SESSION['gioielli'] = $gioielli;
+       header('Location: utente.php');
+       exit();
       } else {
          $_SESSION['errore'] = "Non ci sono prodotti nel sistema";
          header('Location: utente.php');
@@ -101,3 +147,6 @@ function showAll (){
       }}
       
 }
+
+
+
