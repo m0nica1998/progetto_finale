@@ -2,31 +2,18 @@
 session_start();
 ?>
 
-<!DOCTYPE html>
-<html lang="it">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
-</head>
-
-<body>
-
-    <!-- Titolo in cima -->
-    <div class="text-center admin-header">
-        <h3 class="mt-5">Benvenuto,
-            <?php
-            echo htmlspecialchars($_SESSION['name'] ?? 'Admin');
-            ?>
-        </h3>
-    </div>
 
     <main class="admin-body d-flex flex-column min-vh-100">
 
+        <!-- Titolo in cima -->
+        <div class="text-center admin-header">
+            <h3 class="mt-5">Benvenuto,
+                <?php
+                echo htmlspecialchars($_SESSION['name'] ?? 'Admin');
+                ?>
+            </h3>
+        </div>
         <!-- Sezione bottoni -->
         <div class="admin-main d-flex flex-wrap justify-content-center gap-3 p-4">
             <!-- Piante -->
@@ -179,16 +166,17 @@ session_start();
                                                             </p>
                                                             <p class="card-text">
                                                                 <button>Modifica</button>
-                                                                <form action="controller_prodotti.php?action=delete&id=<?php echo $_SESSION['piante'][$i]['id']?>" method="post">
+                                                            <form action="controller_prodotti.php?action=delete&id=<?php echo $_SESSION['piante'][$i]['id'] ?>" method="post">
+                                                                <!-- <?php //echo $_SESSION['piante'][$i]['id']
+                                                                        ?> -->
                                                                 <button
                                                                     type="submit"
-                                                                    class="btn btn-primary"
-                                                                >
-                                                                   Elimina
+                                                                    class="btn btn-primary">
+                                                                    Elimina
                                                                 </button>
-                                                                </form>
-                                                               
-                                                                
+                                                            </form>
+
+
                                                             </p>
                                                         </div>
                                                     </div>
@@ -252,7 +240,7 @@ session_start();
 
                             </div>
 
-                           
+
 
                         </div>
                         <div class="modal-footer">
@@ -268,39 +256,34 @@ session_start();
                 </div>
             </div>
 
-            <script>
-                var modal_lista_prodotti_id = document.getElementById('modal_lista_prodotti_id');
 
-                modal_lista_prodotti_id.addEventListener('show.bs.modal', function(event) {
-                    // Button that triggered the modal
-                    let button = event.relatedTarget;
-                    // Extract info from data-bs-* attributes
-                    let recipient = button.getAttribute('data-bs-whatever');
 
-                    // Use above variables to manipulate the DOM
-                });
-            </script>
-
-            <!-- Borse -->
-
-            <button class="btn btn-dark admin-btn"><i class="fa-solid fa-xmark"></i> Elimina Borsa</button>
-
-            <!-- Gioielli -->
-            <button class="btn btn-dark admin-btn"><i class="fa-solid fa-xmark"></i> Elimina Gioiello</button>
+            
         </div>
 
-        <!-- Bottone Logout -->
-        <div class="text-center pb-2">
+       
+
+        <!-- Spazio flessibile -->
+        <div class="flex-grow-1"></div>
+        <script>
+            var modal_lista_prodotti_id = document.getElementById('modal_lista_prodotti_id');
+
+            modal_lista_prodotti_id.addEventListener('show.bs.modal', function(event) {
+                // Button that triggered the modal
+                let button = event.relatedTarget;
+                // Extract info from data-bs-* attributes
+                let recipient = button.getAttribute('data-bs-whatever');
+
+                // Use above variables to manipulate the DOM
+            });
+        </script>
+         <!-- Bottone Logout -->
+         <div class="text-center pb-2">
             <form action="login_controller.php?action=logout" method="post">
                 <button type="submit" class="btn btn-danger px-5 py-2 mt-5">Effettua il logout</button>
             </form>
         </div>
-
-        <!-- Spazio flessibile -->
-        <div class="flex-grow-1"></div>
-
+        
     </main>
+  
 
-</body>
-
-</html>
