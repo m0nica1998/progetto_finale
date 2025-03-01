@@ -156,6 +156,25 @@ function showAll (){
 function delete(){
   $id = $_GET['id'];
   echo $id;
+  // Connessione al DB
+  $connessione = new mysqli('localhost', 'root', 'root', 'db_tabacchi');
+  if ($connessione->connect_error) {
+    die("Errore di connessione: " . $connessione->connect_error);
+  }
+  $sql = "DELETE FROM persone WHERE id = ?"; //operazione irreversibile
+  $stmt_insert = $connessione->prepare($sql);
+  $stmt_insert->bind_param("s", $id);
+
+  if ($stmt_insert->execute()) {
+    $connessione->close();
+    $_SESSION['successo'] = " Il prodotto è stato eliminato correttamente dal db <br>";
+    header("Location: utente.php"); // Reindirizzamento alla pagina utente
+    exit();
+  } else {
+    $_SESSION['errore'] = "Errore nell'eliminare il prodotto: " . $connessione->error;
+    header("Location: utente.php");
+    exit();
+  }
 }
 
 
