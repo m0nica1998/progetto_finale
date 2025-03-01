@@ -9,6 +9,8 @@ if ($action == 'create') {
   showAll();
 } elseif($action == 'delete'){
   delete();
+} elseif($action == 'edit'){
+  edit();
 }
 
 
@@ -161,21 +163,27 @@ function delete(){
   if ($connessione->connect_error) {
     die("Errore di connessione: " . $connessione->connect_error);
   }
-  $sql = "DELETE FROM persone WHERE id = ?"; //operazione irreversibile
+  $sql = "DELETE FROM prodotti WHERE id = ?"; //operazione irreversibile
   $stmt_insert = $connessione->prepare($sql);
   $stmt_insert->bind_param("s", $id);
 
   if ($stmt_insert->execute()) {
+    showAll();
     $connessione->close();
     $_SESSION['successo'] = " Il prodotto è stato eliminato correttamente dal db <br>";
     header("Location: utente.php"); // Reindirizzamento alla pagina utente
     exit();
   } else {
-    $_SESSION['errore'] = "Errore nell'eliminare il prodotto: " . $connessione->error;
+    $_SESSION['id_errore'] = $id;
+    $_SESSION['errore_eliminazione'] = "Errore nell'eliminare il prodotto: " . $connessione->error;
     header("Location: utente.php");
     exit();
   }
+
 }
 
-
+function edit(){
+  $id = $_GET['id'];
+  echo $id;
+}
 
