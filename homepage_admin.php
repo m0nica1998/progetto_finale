@@ -32,7 +32,7 @@ session_start();
             <!-- Piante -->
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAggiuntaProdotti">
+            <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAggiuntaProdotti">
                 Aggiungi prodotto
             </button>
 
@@ -46,7 +46,7 @@ session_start();
                         </div>
                         <form action="controller_prodotti.php?action=create" method="post" enctype="multipart/form-data">
                             <div class="modal-body">
-                                
+
                                 <?php if (isset($_SESSION['errore']) && $_SESSION['errore'] != null) : ?>
                                     <span><?php echo "Errore" . $_SESSION['errore'] ?></span>
                                 <?php endif; ?>
@@ -89,7 +89,7 @@ session_start();
                                         name="immagine"
                                         id="immagine"
                                         placeholder="Immagine prodotto"
-                                        aria-describedby="fileHelpId" required/>
+                                        aria-describedby="fileHelpId" required />
 
                                 </div>
                                 <div class="mb-3">
@@ -114,14 +114,178 @@ session_start();
                     </div>
                 </div>
             </div>
+            <!-- Modal -->
+            <!-- Button trigger modal -->
+            <?php if ((!isset($_SESSION['piante']) && (!isset($_SESSION['borse']) && (!isset($_SESSION['gioielli']))))) : ?>
+                <form action="controller_prodotti.php?action=showAll" method="post">
+                    <button
+                        type="submit"
+                        class="btn btn-primary pt-3 pb-3"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modal_lista_prodotti_id">
+                        Lista prodotti
+                    </button>
+                </form>
+            <?php else : ?>
+                <button
+                    type="submit"
+                    class="btn btn-primary pt-3 pb-3"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modal_lista_prodotti_id">
+                    Lista prodotti
+                </button>
+            <?php endif; ?>
+
+            <!-- Modal -->
+            <div
+                class="modal fade"
+                id="modal_lista_prodotti_id"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="modale_lista_prodotti_title_id"
+                aria-hidden="true">
+                <div class="modal-dialog modal-fullscreen" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modale_lista_prodotti_title_id">
+                                Lista prodotti
+                            </h5>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div
+                                class="container">
+                                <div
+                                    class="row align-items-start g-2">
+                                    <div class="col"> <?php for ($i = 0; $i < count($_SESSION['piante']); $i++): ?>
+                                            <div class="card mb-3" style="max-width: 540px;">
+                                                <div class="row g-0">
+                                                    <div class="col-md-4">
+                                                        <img
+                                                            src="./imgs/<?php echo $_SESSION['piante'][$i]['immagine'] ?>"
+                                                            class="img-fluid rounded-start"
+                                                            alt="<?php echo $_SESSION['piante'][$i]['nome'] ?>" />
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title"><?php echo $_SESSION['piante'][$i]['nome'] ?></h5>
+                                                            <p class="card-text">
+                                                                Prezzo: <?php echo $_SESSION['piante'][$i]['prezzo'] ?>€<br>
+                                                                Disponibilità in magazzino: <?php echo $_SESSION['piante'][$i]['disp_magazzino'] ?><br>
+                                                            </p>
+                                                            <p class="card-text">
+                                                                <button>Modifica</button>
+                                                                <form action="controller_prodotti.php?action=delete&id=<?php echo $_SESSION['piante'][$i]['id']?>" method="post">
+                                                                <button
+                                                                    type="submit"
+                                                                    class="btn btn-primary"
+                                                                >
+                                                                   Elimina
+                                                                </button>
+                                                                </form>
+                                                               
+                                                                
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endfor; ?>
+                                    </div>
+                                    <div class="col"> <?php for ($i = 0; $i < count($_SESSION['piante']); $i++): ?>
+                                            <div class="card mb-3" style="max-width: 540px;">
+                                                <div class="row g-0">
+                                                    <div class="col-md-4">
+                                                        <img
+                                                            src="./imgs/<?php echo $_SESSION['piante'][$i]['immagine'] ?>"
+                                                            class="img-fluid rounded-start"
+                                                            alt="<?php echo $_SESSION['piante'][$i]['nome'] ?>" />
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title"><?php echo $_SESSION['piante'][$i]['nome'] ?></h5>
+                                                            <p class="card-text">
+                                                                Prezzo: <?php echo $_SESSION['piante'][$i]['prezzo'] ?>€<br>
+                                                                Disponibilità in magazzino: <?php echo $_SESSION['piante'][$i]['disp_magazzino'] ?><br>
+                                                            </p>
+                                                            <p class="card-text">
+                                                                <button>Modifica</button>
+                                                                <button>Elimina</button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endfor; ?>
+                                    </div>
+                                    <div class="col"> <?php for ($i = 0; $i < count($_SESSION['piante']); $i++): ?>
+                                            <div class="card mb-3" style="max-width: 540px;">
+                                                <div class="row g-0">
+                                                    <div class="col-md-4">
+                                                        <img
+                                                            src="./imgs/<?php echo $_SESSION['piante'][$i]['immagine'] ?>"
+                                                            class="img-fluid rounded-start"
+                                                            alt="<?php echo $_SESSION['piante'][$i]['nome'] ?>" />
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title"><?php echo $_SESSION['piante'][$i]['nome'] ?></h5>
+                                                            <p class="card-text">
+                                                                Prezzo: <?php echo $_SESSION['piante'][$i]['prezzo'] ?>€<br>
+                                                                Disponibilità in magazzino: <?php echo $_SESSION['piante'][$i]['disp_magazzino'] ?><br>
+                                                            </p>
+                                                            <p class="card-text">
+                                                                <button>Modifica</button>
+                                                                <button>Elimina</button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endfor; ?>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                           
+
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                                Chiudi
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                var modal_lista_prodotti_id = document.getElementById('modal_lista_prodotti_id');
+
+                modal_lista_prodotti_id.addEventListener('show.bs.modal', function(event) {
+                    // Button that triggered the modal
+                    let button = event.relatedTarget;
+                    // Extract info from data-bs-* attributes
+                    let recipient = button.getAttribute('data-bs-whatever');
+
+                    // Use above variables to manipulate the DOM
+                });
+            </script>
+
             <!-- Borse -->
 
-            <button class="btn btn-warning admin-btn text-white"><i class="fa-solid fa-pen"></i> Modifica Borsa</button>
             <button class="btn btn-dark admin-btn"><i class="fa-solid fa-xmark"></i> Elimina Borsa</button>
 
             <!-- Gioielli -->
-
-            <button class="btn btn-warning admin-btn text-white"><i class="fa-solid fa-pen"></i> Modifica Gioiello</button>
             <button class="btn btn-dark admin-btn"><i class="fa-solid fa-xmark"></i> Elimina Gioiello</button>
         </div>
 
