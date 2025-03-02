@@ -60,12 +60,10 @@ function showBorse()
             $_SESSION['piante'] = $piante;
             $_SESSION['borse'] = $borse;
             $_SESSION['gioielli'] = $gioielli;
-           // header('Location: shop_borse.php');
-          //  exit();
+           
         } else {
             $_SESSION['errore'] = "Non ci sono prodotti nel sistema";
-          //  header('Location: shop_borse.php');
-          //  exit();
+          
         }
     }
 }
