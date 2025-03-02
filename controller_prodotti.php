@@ -1,404 +1,146 @@
 <?php
-//fare controllo immmagine e limite peso file imm.
+// Avvia la sessione per gestire i messaggi di errore e successo
 session_start();
-// selettore di metodi CRUD
+
+// Selettore di metodi CRUD in base al parametro 'action' passato via GET
 $action = $_GET['action'];
 if ($action == 'create') {
   create();
-} elseif($action == 'showAll'){
+} elseif ($action == 'showAll') {
   showAll();
-} elseif($action == 'delete'){
+} elseif ($action == 'delete') {
   delete();
-} elseif($action == 'edit'){
+} elseif ($action == 'edit') {
   edit();
 }
 
-
-
-function create()
-{
+// Funzione per creare un nuovo prodotto nel database
+function create() {
   $_SESSION['errore'] = "";
   $_SESSION['successo'] = "";
-  //recupero input form
+
+  // Recupero input dal form
   $nome_prodotto = $_POST['nome_prodotto'];
   $prezzo = $_POST['prezzo'];
   $tipo = $_POST['tipo'];
-  
   $disp_magazzino = $_POST['disp_magazzino'];
-
-  // Nome del file
+  
+  // Gestione immagine caricata
   $filename = $_FILES['immagine']['name'];
-  // Dati del file
-  $filedata = $_FILES['immagine']['name'] != null ? ($_FILES['immagine']['tmp_name']) : "";
+  $filedata = $_FILES['immagine']['tmp_name'] ?? "";
 
-  echo  $prezzo . "<br>";
-  echo $nome_prodotto . "<br>";
-  echo   $tipo . "<br>";
-  echo $filename . "<br>";
-  echo $disp_magazzino . "<br>";
-  echo $filedata;
-
-  //controllo dei dati
-  if (!(strlen($nome_prodotto) > 0)) {
-    $_SESSION['errore'] = "non hai inserito nessun nome ";
+  // Controllo dei dati inseriti
+  if (strlen($nome_prodotto) == 0) {
+    $_SESSION['errore'] = "Non hai inserito nessun nome";
   }
-  if (!($prezzo > 0)) {
-    $_SESSION['errore'] = "il prezzo non è valido ";
+  if ($prezzo <= 0) {
+    $_SESSION['errore'] = "Il prezzo non è valido";
   }
-
   $tipi = ["piante", "borse", "gioielli"];
-  if (!(in_array($tipo, $tipi))) {
-    $_SESSION['errore'] = "seleziona un tipo corretto ";
+  if (!in_array($tipo, $tipi)) {
+    $_SESSION['errore'] = "Seleziona un tipo corretto";
   }
-  if (!($disp_magazzino >= 0)) {
-    $_SESSION['errore'] = "la disponibilità non è corretta ";
+  if ($disp_magazzino < 0) {
+    $_SESSION['errore'] = "La disponibilità non è corretta";
   }
- 
-  if (isset($_SESSION['errore']) && ($_SESSION['errore'] != "")) {
+  
+  if (!empty($_SESSION['errore'])) {
     header('Location: utente.php');
     exit();
   }
 
-
-  // Connessione al DB
+  // Connessione al database
   $connessione = new mysqli('localhost', 'root', 'root', 'db_tabacchi');
   if ($connessione->connect_error) {
     die("Errore di connessione: " . $connessione->connect_error);
   }
 
-  // Inserimento dati
+  // Inserimento dati nel database
   $sql_insert = "INSERT INTO prodotti (nome, tipo, prezzo, immagine, fileData, disp_magazzino) VALUES (?, ?, ?, ?, ?, ?)";
   $stmt_insert = $connessione->prepare($sql_insert);
   $stmt_insert->bind_param("ssssss", $nome_prodotto, $tipo, $prezzo, $filename, $filedata, $disp_magazzino);
 
   if ($stmt_insert->execute()) {
-    $connessione->close();
-    $_SESSION['successo'] = " Il prodotto è stato caricato correttamente sul db";
-    header("Location: utente.php"); // Reindirizzamento alla pagina utente
-    exit();
+    $_SESSION['successo'] = "Il prodotto è stato caricato correttamente";
   } else {
-    $_SESSION['errore'] = "Errore nell'inserimento dei dati: " . $connessione->error;
-    header("Location: utente.php");
-    exit();
+    $_SESSION['errore'] = "Errore nell'inserimento: " . $connessione->error;
   }
-}
-
-function showAll (){
-
-    // Connessione al DB
-    $connessione = new mysqli('localhost', 'root', 'root', 'db_tabacchi');
-    if ($connessione->connect_error) {
-      die("Errore di connessione: " . $connessione->connect_error);
-    }
-
-    $query = "SELECT id, nome, tipo, prezzo, immagine, fileData, disp_magazzino FROM prodotti";
-    if ($result = $connessione -> query($query)) {
-    
-      //verifica se sono presenti dati nella tabella
-      if($result -> num_rows > 0) { 
-        $piante = [];
-        $borse = [];
-        $gioielli = [];
-        while ($row = $result->fetch_assoc()){
-          if($row['tipo'] == "piante"){
-            $pianta = [
-              "id" => $row['id'],
-              "nome" => $row['nome'],
-              "tipo" => "piante",
-              "prezzo" => $row['prezzo'],
-              "immagine" => $row['immagine'],
-              "fileData" => $row['fileData'],
-              "disp_magazzino" => $row['disp_magazzino']
-
-            ];
-            array_push($piante, $pianta);
-          } elseif($row['tipo'] == "borse"){
-            $borsa = [
-              "id" => $row['id'],
-              "nome" => $row['nome'],
-              "tipo" => "borse",
-              "prezzo" => $row['prezzo'],
-              "immagine" => $row['immagine'],
-              "fileData" => $row['fileData'],
-              "disp_magazzino" => $row['disp_magazzino']
-
-            ];
-            array_push($borse, $borsa);
-          } else { 
-            $gioiello = [
-              "id" => $row['id'],
-              "nome" => $row['nome'],
-              "tipo" => "gioielli",
-              "prezzo" => $row['prezzo'],
-              "immagine" => $row['immagine'],
-              "fileData" => $row['fileData'],
-              "disp_magazzino" => $row['disp_magazzino']
-
-            ];
-            array_push($gioielli, $gioiello);
-
-          }
-        }
-        var_dump($borse);
-        var_dump($piante);
-        var_dump($gioielli);
-       $_SESSION['piante'] = $piante;
-       $_SESSION['borse'] = $borse;
-       $_SESSION['gioielli'] = $gioielli;
-       header('Location: utente.php');
-       exit();
-      } else {
-         $_SESSION['errore'] = "Non ci sono prodotti nel sistema";
-         header('Location: utente.php');
-         exit();
-      }}
-      
-}
-function showPiante (){
-
-  // Connessione al DB
-  $connessione = new mysqli('localhost', 'root', 'root', 'db_tabacchi');
-  if ($connessione->connect_error) {
-    die("Errore di connessione: " . $connessione->connect_error);
-  }
-
-  $query = "SELECT id, nome, tipo, prezzo, immagine, fileData, disp_magazzino FROM prodotti";
-  if ($result = $connessione -> query($query)) {
   
-    //verifica se sono presenti dati nella tabella
-    if($result -> num_rows > 0) { 
-      $piante = [];
-      $borse = [];
-      $gioielli = [];
-      while ($row = $result->fetch_assoc()){
-        if($row['tipo'] == "piante"){
-          $pianta = [
-            "id" => $row['id'],
-            "nome" => $row['nome'],
-            "tipo" => "piante",
-            "prezzo" => $row['prezzo'],
-            "immagine" => $row['immagine'],
-            "fileData" => $row['fileData'],
-            "disp_magazzino" => $row['disp_magazzino']
-
-          ];
-          array_push($piante, $pianta);
-        } elseif($row['tipo'] == "borse"){
-          $borsa = [
-            "id" => $row['id'],
-            "nome" => $row['nome'],
-            "tipo" => "borse",
-            "prezzo" => $row['prezzo'],
-            "immagine" => $row['immagine'],
-            "fileData" => $row['fileData'],
-            "disp_magazzino" => $row['disp_magazzino']
-
-          ];
-          array_push($borse, $borsa);
-        } else { 
-          $gioiello = [
-            "id" => $row['id'],
-            "nome" => $row['nome'],
-            "tipo" => "gioielli",
-            "prezzo" => $row['prezzo'],
-            "immagine" => $row['immagine'],
-            "fileData" => $row['fileData'],
-            "disp_magazzino" => $row['disp_magazzino']
-
-          ];
-          array_push($gioielli, $gioiello);
-
-        }
-      }
-      var_dump($borse);
-      var_dump($piante);
-      var_dump($gioielli);
-     $_SESSION['piante'] = $piante;
-     $_SESSION['borse'] = $borse;
-     $_SESSION['gioielli'] = $gioielli;
-     header('Location: shop_piante.php');
-     exit();
-    } else {
-       $_SESSION['errore'] = "Non ci sono prodotti nel sistema";
-       header('Location: shop_piante.php');
-       exit();
-    }}
-    
+  $connessione->close();
+  header("Location: utente.php");
+  exit();
 }
 
-
-
-function showGioielli (){
-
-  // Connessione al DB
+// Funzione per visualizzare tutti i prodotti
+function showAll() {
   $connessione = new mysqli('localhost', 'root', 'root', 'db_tabacchi');
   if ($connessione->connect_error) {
     die("Errore di connessione: " . $connessione->connect_error);
   }
 
-  $query = "SELECT id, nome, tipo, prezzo, immagine, fileData, disp_magazzino FROM prodotti";
-  if ($result = $connessione -> query($query)) {
+  $query = "SELECT * FROM prodotti";
+  $result = $connessione->query($query);
   
-    //verifica se sono presenti dati nella tabella
-    if($result -> num_rows > 0) { 
-      $piante = [];
-      $borse = [];
-      $gioielli = [];
-      while ($row = $result->fetch_assoc()){
-        if($row['tipo'] == "piante"){
-          $pianta = [
-            "id" => $row['id'],
-            "nome" => $row['nome'],
-            "tipo" => "piante",
-            "prezzo" => $row['prezzo'],
-            "immagine" => $row['immagine'],
-            "fileData" => $row['fileData'],
-            "disp_magazzino" => $row['disp_magazzino']
-
-          ];
-          array_push($piante, $pianta);
-        } elseif($row['tipo'] == "borse"){
-          $borsa = [
-            "id" => $row['id'],
-            "nome" => $row['nome'],
-            "tipo" => "borse",
-            "prezzo" => $row['prezzo'],
-            "immagine" => $row['immagine'],
-            "fileData" => $row['fileData'],
-            "disp_magazzino" => $row['disp_magazzino']
-
-          ];
-          array_push($borse, $borsa);
-        } else { 
-          $gioiello = [
-            "id" => $row['id'],
-            "nome" => $row['nome'],
-            "tipo" => "gioielli",
-            "prezzo" => $row['prezzo'],
-            "immagine" => $row['immagine'],
-            "fileData" => $row['fileData'],
-            "disp_magazzino" => $row['disp_magazzino']
-
-          ];
-          array_push($gioielli, $gioiello);
-
-        }
-      }
-      var_dump($borse);
-      var_dump($piante);
-      var_dump($gioielli);
-     $_SESSION['piante'] = $piante;
-     $_SESSION['borse'] = $borse;
-     $_SESSION['gioielli'] = $gioielli;
-     header('Location: shop_gioielli.php');
-     exit();
-    } else {
-       $_SESSION['errore'] = "Non ci sono prodotti nel sistema";
-       header('Location: shop_gioielli.php');
-       exit();
-    }}
-    
-}
-function delete(){
-  $id = $_GET['id'];
-  echo $id;
-  // Connessione al DB
-  $connessione = new mysqli('localhost', 'root', 'root', 'db_tabacchi');
-  if ($connessione->connect_error) {
-    die("Errore di connessione: " . $connessione->connect_error);
-  }
-  $sql = "DELETE FROM prodotti WHERE id = ?"; //operazione irreversibile
-  $stmt_insert = $connessione->prepare($sql);
-  $stmt_insert->bind_param("s", $id);
-
-  if ($stmt_insert->execute()) {
-    showAll();
-    $connessione->close();
-    $_SESSION['successo'] = " Il prodotto è stato eliminato correttamente dal db <br>";
-    header("Location: utente.php"); // Reindirizzamento alla pagina utente
-    exit();
+  if ($result->num_rows > 0) {
+    $_SESSION['prodotti'] = $result->fetch_all(MYSQLI_ASSOC);
   } else {
-    $_SESSION['id_errore'] = $id;
-    $_SESSION['errore_eliminazione'] = "Errore nell'eliminare il prodotto: " . $connessione->error;
-    header("Location: utente.php");
-    exit();
+    $_SESSION['errore'] = "Nessun prodotto trovato";
   }
-
+  
+  $connessione->close();
+  header("Location: utente.php");
+  exit();
 }
 
-
-function edit(){
-  $_SESSION['error'] = "";
-  $_SESSION['successo'] = "";
+// Funzione per eliminare un prodotto
+function delete() {
   $id = $_GET['id'];
+  $connessione = new mysqli('localhost', 'root', 'root', 'db_tabacchi');
+  if ($connessione->connect_error) {
+    die("Errore di connessione: " . $connessione->connect_error);
+  }
+
+  $sql = "DELETE FROM prodotti WHERE id = ?";
+  $stmt = $connessione->prepare($sql);
+  $stmt->bind_param("s", $id);
   
-
- // echo $id;
-   //recupero input form
-   
-   $nome_prodotto = $_POST['nome_prodotto'];
-   $prezzo = $_POST['prezzo'];
-   $tipo = $_POST['tipo'];
-   
-   $disp_magazzino = $_POST['disp_magazzino'];
+  if ($stmt->execute()) {
+    $_SESSION['successo'] = "Prodotto eliminato con successo";
+  } else {
+    $_SESSION['errore'] = "Errore nell'eliminazione: " . $connessione->error;
+  }
   
-   // Nome del file
-   $filename = $_FILES['immagine']['name'];
-   // Dati del file
-   $filedata = $_FILES['immagine']['name'] != null ? ($_FILES['immagine']['tmp_name']) : "";
-
-    //controllo dei dati
-  if (!(strlen($nome_prodotto) > 0)) {
-    $_SESSION['errore'] = "non hai inserito nessun nome ";
-  }
-  if (!($prezzo > 0)) {
-    $_SESSION['errore'] = "il prezzo non è valido ";
-  }
-
-  $tipi = ["piante", "borse", "gioielli"];
-  if (!(in_array($tipo, $tipi))) {
-    $_SESSION['errore'] = "seleziona un tipo corretto ";
-  }
-  if (!($disp_magazzino >= 0)) {
-    $_SESSION['errore'] = "la disponibilità non è corretta ";
-  }
- 
-  if (isset($_SESSION['errore']) && ($_SESSION['errore'] != "")) {
-    header('Location: utente.php');
-    exit();
-  }
-
-   // Connessione al DB
-   $connessione = new mysqli('localhost', 'root', 'root', 'db_tabacchi');
-   if ($connessione->connect_error) {
-     die("Errore di connessione: " . $connessione->connect_error);
-   }
- 
-   // Inserimento dati
-   $sql_update = "UPDATE prodotti 
-               SET nome = ?, 
-                   tipo = ?, 
-                   prezzo = ?, 
-                   immagine = ?, 
-                   fileData = ?,  
-                   disp_magazzino = ? 
-               WHERE id = ?";
-
-   $stmt_update = $connessione->prepare($sql_update);
-   $stmt_update->bind_param("sssssss", $nome_prodotto, $tipo, $prezzo, $filename, $filedata, $disp_magazzino, $id);
- 
-   if ($stmt_update->execute()) {
-     $connessione->close();
-     $_SESSION['successo'] = " Il prodotto è stato aggiornato correttamente sul db";
-     showAll();
-     header("Location: utente.php"); // Reindirizzamento alla pagina utente
-     exit();
-   } else {
-     $_SESSION['errore'] = "Errore nell'aggiornamento dei dati: " . $connessione->error;
-     header("Location: utente.php");
-     exit();
-   }
-
-
+  $connessione->close();
+  header("Location: utente.php");
+  exit();
 }
 
+// Funzione per modificare un prodotto
+function edit() {
+  $id = $_GET['id'];
+  $nome_prodotto = $_POST['nome_prodotto'];
+  $prezzo = $_POST['prezzo'];
+  $tipo = $_POST['tipo'];
+  $disp_magazzino = $_POST['disp_magazzino'];
+  $filename = $_FILES['immagine']['name'];
+  $filedata = $_FILES['immagine']['tmp_name'] ?? "";
+  
+  $connessione = new mysqli('localhost', 'root', 'root', 'db_tabacchi');
+  if ($connessione->connect_error) {
+    die("Errore di connessione: " . $connessione->connect_error);
+  }
+
+  $sql_update = "UPDATE prodotti SET nome = ?, tipo = ?, prezzo = ?, immagine = ?, fileData = ?, disp_magazzino = ? WHERE id = ?";
+  $stmt_update = $connessione->prepare($sql_update);
+  $stmt_update->bind_param("sssssss", $nome_prodotto, $tipo, $prezzo, $filename, $filedata, $disp_magazzino, $id);
+
+  if ($stmt_update->execute()) {
+    $_SESSION['successo'] = "Prodotto aggiornato correttamente";
+  } else {
+    $_SESSION['errore'] = "Errore nell'aggiornamento: " . $connessione->error;
+  }
+  
+  $connessione->close();
+  header("Location: utente.php");
+  exit();
+}
