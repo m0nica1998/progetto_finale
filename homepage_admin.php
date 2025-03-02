@@ -52,6 +52,7 @@ session_start();
 
                             </div>
                             <div class="input-group mb-3">
+                            <label for="" class="form-label">Prezzo</label>
                                 <span class="input-group-text">€</span>
                                 <input type="number" id="prezzo" name="prezzo" class="form-control" aria-label="Amount (to the nearest dollar)">
 
@@ -165,8 +166,15 @@ session_start();
                                                             Disponibilità in magazzino: <?php echo $_SESSION['piante'][$i]['disp_magazzino'] ?><br>
                                                         </p>
                                                         <p class="card-text">
-                                                            <!-- Button trigger modal -->
-                                                           <button>Modifica</button>
+                                                         <form action="modifica_prodotto.php?id=<?php echo $i ?>&tipo=<?php echo $_SESSION['piante'][$i]['tipo'] ?>" method="post">
+                                                            <button
+                                                                type="submit"
+                                                                class="btn btn-primary"
+                                                            >
+                                                                Modifica
+                                                            </button>
+                                                            
+                                                         </form>
 
                                                         <form action="controller_prodotti.php?action=delete&id=<?php echo $_SESSION['piante'][$i]['id'] ?>" method="post">
                                                             <!-- <?php //echo $_SESSION['piante'][$i]['id']
