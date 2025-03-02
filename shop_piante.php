@@ -1,6 +1,6 @@
 <?php
 session_start();
-function showBPiante()
+function showPiante()
 {
 
     // Connessione al DB
