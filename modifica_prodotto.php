@@ -18,7 +18,8 @@ $prodotti[$id];
 ?>
 
 <main class="modifica-prodotto">
-  <form action="controller_prodotti.php?action=edit&id=<?php echo  $prodotti[$id]['id'] ?>" method="post">
+  <form action="controller_prodotti.php?action=edit&id=<?php echo  $prodotti[$id]['id'] ?>" method="post" enctype="multipart/form-data"
+  >
     <div class="mb-3">
       <label for="" class="form-label">Nome</label>
       <input

@@ -181,7 +181,7 @@ session_start();
                                                                     ?> -->
                                                             <button
                                                                 type="submit"
-                                                                class="btn btn-primary">
+                                                                class="btn btn-primary mt-3">
                                                                 Elimina
                                                             </button>
                                                         </form>
@@ -194,25 +194,44 @@ session_start();
                                         </div>
                                     <?php endfor; ?>
                                 </div>
-                                <div class="col"> <?php for ($i = 0; $i < count($_SESSION['piante']); $i++): ?>
+                                <div class="col"> <?php for ($i = 0; $i < count($_SESSION['borse']); $i++): ?>
                                         <div class="card mb-3" style="max-width: 540px;">
                                             <div class="row g-0">
                                                 <div class="col-md-4">
                                                     <img
-                                                        src="./imgs/<?php echo $_SESSION['piante'][$i]['immagine'] ?>"
+                                                        src="./imgs/<?php echo $_SESSION['borse'][$i]['immagine'] ?>"
                                                         class="img-fluid rounded-start"
-                                                        alt="<?php echo $_SESSION['piante'][$i]['nome'] ?>" />
+                                                        alt="<?php echo $_SESSION['borse'][$i]['nome'] ?>" />
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="card-body">
-                                                        <h5 class="card-title"><?php echo $_SESSION['piante'][$i]['nome'] ?></h5>
+                                                        <h5 class="card-title"><?php echo $_SESSION['borse'][$i]['nome'] ?></h5>
                                                         <p class="card-text">
-                                                            Prezzo: <?php echo $_SESSION['piante'][$i]['prezzo'] ?>€<br>
-                                                            Disponibilità in magazzino: <?php echo $_SESSION['piante'][$i]['disp_magazzino'] ?><br>
+                                                            Prezzo: <?php echo $_SESSION['borse'][$i]['prezzo'] ?>€<br>
+                                                            Disponibilità in magazzino: <?php echo $_SESSION['borse'][$i]['disp_magazzino'] ?><br>
                                                         </p>
                                                         <p class="card-text">
-                                                            <button>Modifica</button>
-                                                            <button>Elimina</button>
+                                                         <form action="modifica_prodotto.php?id=<?php echo $i ?>&tipo=<?php echo $_SESSION['borse'][$i]['tipo'] ?>" method="post">
+                                                            <button
+                                                                type="submit"
+                                                                class="btn btn-primary"
+                                                            >
+                                                                Modifica
+                                                            </button>
+                                                            
+                                                         </form>
+
+                                                        <form action="controller_prodotti.php?action=delete&id=<?php echo $_SESSION['borse'][$i]['id'] ?>" method="post">
+                                                            <!-- <?php //echo $_SESSION['piante'][$i]['id']
+                                                                    ?> -->
+                                                            <button
+                                                                type="submit"
+                                                                class="btn btn-primary mt-3">
+                                                                Elimina
+                                                            </button>
+                                                        </form>
+
+
                                                         </p>
                                                     </div>
                                                 </div>
@@ -220,25 +239,44 @@ session_start();
                                         </div>
                                     <?php endfor; ?>
                                 </div>
-                                <div class="col"> <?php for ($i = 0; $i < count($_SESSION['piante']); $i++): ?>
+                                <div class="col"> <?php for ($i = 0; $i < count($_SESSION['gioielli']); $i++): ?>
                                         <div class="card mb-3" style="max-width: 540px;">
                                             <div class="row g-0">
                                                 <div class="col-md-4">
                                                     <img
-                                                        src="./imgs/<?php echo $_SESSION['piante'][$i]['immagine'] ?>"
+                                                        src="./imgs/<?php echo $_SESSION['gioielli'][$i]['immagine'] ?>"
                                                         class="img-fluid rounded-start"
-                                                        alt="<?php echo $_SESSION['piante'][$i]['nome'] ?>" />
+                                                        alt="<?php echo $_SESSION['gioielli'][$i]['nome'] ?>" />
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="card-body">
-                                                        <h5 class="card-title"><?php echo $_SESSION['piante'][$i]['nome'] ?></h5>
+                                                        <h5 class="card-title"><?php echo $_SESSION['gioielli'][$i]['nome'] ?></h5>
                                                         <p class="card-text">
-                                                            Prezzo: <?php echo $_SESSION['piante'][$i]['prezzo'] ?>€<br>
-                                                            Disponibilità in magazzino: <?php echo $_SESSION['piante'][$i]['disp_magazzino'] ?><br>
+                                                            Prezzo: <?php echo $_SESSION['gioielli'][$i]['prezzo'] ?>€<br>
+                                                            Disponibilità in magazzino: <?php echo $_SESSION['gioielli'][$i]['disp_magazzino'] ?><br>
                                                         </p>
                                                         <p class="card-text">
-                                                            <button>Modifica</button>
-                                                            <button>Elimina</button>
+                                                         <form action="modifica_prodotto.php?id=<?php echo $i ?>&tipo=<?php echo $_SESSION['gioielli'][$i]['tipo'] ?>" method="post">
+                                                            <button
+                                                                type="submit"
+                                                                class="btn btn-primary"
+                                                            >
+                                                                Modifica
+                                                            </button>
+                                                            
+                                                         </form>
+
+                                                        <form action="controller_prodotti.php?action=delete&id=<?php echo $_SESSION['gioielli'][$i]['id'] ?>" method="post">
+                                                            <!-- <?php //echo $_SESSION['piante'][$i]['id']
+                                                                    ?> -->
+                                                            <button
+                                                                type="submit"
+                                                                class="btn btn-primary mt-3">
+                                                                Elimina
+                                                            </button>
+                                                        </form>
+
+
                                                         </p>
                                                     </div>
                                                 </div>
@@ -246,6 +284,7 @@ session_start();
                                         </div>
                                     <?php endfor; ?>
                                 </div>
+                               
                             </div>
 
                         </div>
