@@ -11,6 +11,8 @@ if ($action == 'create') {
   delete();
 } elseif($action == 'edit'){
   edit();
+} elseif($action == 'search'){
+ search();
 }
 
 
@@ -251,3 +253,9 @@ function edit(){
 
 }
 
+function search(){
+  $ricerca = $_POST['ricerca'];
+  echo $ricerca;
+
+
+}
