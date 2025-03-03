@@ -98,7 +98,7 @@ include 'header.php'; ?>
                 <div class="col-sm col-md-3 col-lg-3 d-flex flex-column mt-4">
                       <!-- Header della card del prodotto -->
                     <div class="header-card d-flex ">
-                        <div class="borsa col-4 ms-1 me-1 ">
+                        <div class="pianta col-4 ms-1 me-1 ">
 
                         </div>
                         <div class="text col-8">
