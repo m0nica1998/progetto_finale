@@ -13,6 +13,8 @@ if ($action == 'create') {
   edit();
 } elseif ($action == 'search') {
   search();
+} elseif ($action == 'reset_search') {
+  reset_search();
 }
 
 
@@ -344,4 +346,18 @@ function search()
         }
         exit();
     } 
+}
+
+function reset_search(){
+  $type = $_GET['type'];
+$_SESSION['prodotti_ricerca'] = [];
+ // Reindirizziamo in base alla categoria
+ if ($type == 'Piante') {
+  header('Location: Shop_piante.php');
+} elseif ($type == 'Borse') {
+  header('Location: Shop_borse.php');
+} elseif ($type == 'Gioielli') {
+  header('Location: shop_gioielli.php');
+} 
+exit();
 }

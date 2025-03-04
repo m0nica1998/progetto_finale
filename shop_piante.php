@@ -2,6 +2,19 @@
 // Avvia una sessione per gestire variabili globali tra le pagine
 session_start();
 
+$prodotti_ricerca = [];
+if(isset($_SESSION['prodotti_ricerca'])) { 
+    echo count($prodotti_ricerca);
+    echo  count($_SESSION['prodotti_ricerca']);
+    $prodotti_ricerca = $_SESSION['prodotti_ricerca'];
+    $_SESSION['prodotti_ricerca'] = [];
+    echo "sono nell'if";
+    echo count($prodotti_ricerca);
+    echo  count($_SESSION['prodotti_ricerca']);
+} else { 
+    $_SESSION['prodotti_ricerca']= []; 
+    echo "sono nell'else";
+} 
 // Funzione che recupera i dati dei prodotti dal database e li divide in categorie
 function showPiante()
 {
@@ -92,10 +105,11 @@ include 'header.php'; ?>
 <main class="main-shop-piante">
     <div class="container">
         <div class="row">
-            <?php if(isset($_SESSION['prodotti_ricerca']) && count($_SESSION['prodotti_ricerca']) >0) : ?>
+            <?php if(count($prodotti_ricerca) >0) : ?>
             <?php 
             // Ciclo su tutti i prodotti di tipo "piante" salvati in sessione
-            for ($i = 0; $i < count($_SESSION['prodotti_ricerca']); $i++): ?>
+            for ($i = 0; $i < count($prodotti_ricerca); $i++): ?>
+            
                 <div class="col-sm col-md-3 col-lg-3 d-flex flex-column mt-4">
                       <!-- Header della card del prodotto -->
                     <div class="header-card d-flex ">
@@ -104,7 +118,7 @@ include 'header.php'; ?>
                         </div>
                         <div class="text col-8">
                             <!-- Nome del prodotto -->
-                            <p class="fw-bold testo-titolo"><?php echo $_SESSION['prodotti_ricerca'][$i]['nome'] ?></p>
+                            <p class="fw-bold testo-titolo"><?php echo $prodotti_ricerca[$i]['nome'] ?></p>
                         </div>
                     </div>
                     <div class="main-card card-equal-height">
@@ -118,16 +132,16 @@ include 'header.php'; ?>
                                     <div class="ribbon bg-orange">NEW</div>
                                 <?php endif; ?>
                                  <!-- Immagine del prodotto, con classe per l'opacità se il prodotto è esaurito -->
-                                <img src="imgs/<?php echo $_SESSION['prodotti_ricerca'][$i]['immagine'] ?>" alt="<?php echo $_SESSION['prodotti_ricerca'][$i]['nome'] ?>" class="img <?php if ($_SESSION['prodotti_ricerca'][$i]['disp_magazzino'] == 0) {
+                                <img src="imgs/<?php echo $prodotti_ricerca[$i]['immagine'] ?>" alt="<?php echo $prodotti_ricerca[$i]['nome'] ?>" class="img <?php if ($prodotti_ricerca[$i]['disp_magazzino'] == 0) {
                                                                                                                                                                     echo "opaca";
                                                                                                                                                                 } ?>">
                             </div>
                             <div class="col text-center mt-2">
                                 <!-- Prezzo del prodotto -->
-                                <p class="fw-bold">Prezzo <?php echo $_SESSION['prodotti_ricerca'][$i]['prezzo'] ?> €</p>
+                                <p class="fw-bold">Prezzo <?php echo $prodotti_ricerca[$i]['prezzo'] ?> €</p>
                                 <div class="footer-card d-flex justify-content-center">
                                     <!-- Se il prodotto è esaurito, il bottone "Acquista" è disabilitato -->
-                                    <?php if ($_SESSION['prodotti_ricerca'][$i]['disp_magazzino'] == 0): ?>
+                                    <?php if ($prodotti_ricerca[$i]['disp_magazzino'] == 0): ?>
                                         <button type="button" class="btn btn-shop" disabled
                                             style="cursor: not-allowed; background-color: #ccc; color: #666;">
                                             Esaurito
@@ -144,6 +158,7 @@ include 'header.php'; ?>
                     </div>
                 </div>
             <?php endfor; ?>
+            
             <?php else : ?>
                 <?php 
             // Ciclo su tutti i prodotti di tipo "piante" salvati in sessione
