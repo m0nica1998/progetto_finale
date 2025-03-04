@@ -92,7 +92,60 @@ include 'header.php'; ?>
 <main class="main-shop-piante">
     <div class="container">
         <div class="row">
+            <?php if(isset($_SESSION['prodotti_ricerca']) && count($_SESSION['prodotti_ricerca']) >0) : ?>
             <?php 
+            // Ciclo su tutti i prodotti di tipo "piante" salvati in sessione
+            for ($i = 0; $i < count($_SESSION['prodotti_ricerca']); $i++): ?>
+                <div class="col-sm col-md-3 col-lg-3 d-flex flex-column mt-4">
+                      <!-- Header della card del prodotto -->
+                    <div class="header-card d-flex ">
+                        <div class="pianta col-4 ms-1 me-1 ">
+
+                        </div>
+                        <div class="text col-8">
+                            <!-- Nome del prodotto -->
+                            <p class="fw-bold testo-titolo"><?php echo $_SESSION['prodotti_ricerca'][$i]['nome'] ?></p>
+                        </div>
+                    </div>
+                    <div class="main-card card-equal-height">
+                        <div class="row justify-content-center align-items-center flex-column">
+                            <div class="col d-flex justify-content-center position-relative">
+                                <!-- Se il prodotto è nelle posizioni specifiche, aggiungi l'etichetta "HOT" o "NEW" -->
+                                <?php if (in_array($i, [1])): ?>
+                                    <div class="ribbon bg-green">HOT</div>
+                                <?php endif; ?>
+                                <?php if (in_array($i, [0])): ?>
+                                    <div class="ribbon bg-orange">NEW</div>
+                                <?php endif; ?>
+                                 <!-- Immagine del prodotto, con classe per l'opacità se il prodotto è esaurito -->
+                                <img src="imgs/<?php echo $_SESSION['prodotti_ricerca'][$i]['immagine'] ?>" alt="<?php echo $_SESSION['prodotti_ricerca'][$i]['nome'] ?>" class="img <?php if ($_SESSION['prodotti_ricerca'][$i]['disp_magazzino'] == 0) {
+                                                                                                                                                                    echo "opaca";
+                                                                                                                                                                } ?>">
+                            </div>
+                            <div class="col text-center mt-2">
+                                <!-- Prezzo del prodotto -->
+                                <p class="fw-bold">Prezzo <?php echo $_SESSION['prodotti_ricerca'][$i]['prezzo'] ?> €</p>
+                                <div class="footer-card d-flex justify-content-center">
+                                    <!-- Se il prodotto è esaurito, il bottone "Acquista" è disabilitato -->
+                                    <?php if ($_SESSION['prodotti_ricerca'][$i]['disp_magazzino'] == 0): ?>
+                                        <button type="button" class="btn btn-shop" disabled
+                                            style="cursor: not-allowed; background-color: #ccc; color: #666;">
+                                            Esaurito
+                                        </button>
+                                    <?php else: ?>
+                                        <!-- Altrimenti, il bottone "Acquista" apre la pagina del carrello -->
+                                        <button type="button" class="btn btn-shop" onclick="window.open('carrello.php', '_blank');">
+                                            Acquista
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endfor; ?>
+            <?php else : ?>
+                <?php 
             // Ciclo su tutti i prodotti di tipo "piante" salvati in sessione
             for ($i = 0; $i < count($_SESSION['piante']); $i++): ?>
                 <div class="col-sm col-md-3 col-lg-3 d-flex flex-column mt-4">
@@ -143,6 +196,7 @@ include 'header.php'; ?>
                     </div>
                 </div>
             <?php endfor; ?>
+                <?php endif; ?>
         </div>
     </div>
 </main>
