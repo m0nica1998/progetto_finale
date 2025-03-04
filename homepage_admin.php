@@ -1,9 +1,3 @@
-<?php
-session_start();  // Avvia la sessione per gestire i dati dell'utente
-?>
-
-
-
 <main class="admin-body d-flex flex-column min-vh-100">
 
    <!-- Titolo in cima con il nome dell'utente amministratore -->
