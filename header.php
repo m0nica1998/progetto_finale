@@ -19,16 +19,31 @@
                  <!-- Logo con link alla homepage -->
                 <a class="navbar-brand  container-logo border rounded-circle" href="index.php" ></a>
                 <!-- Barra di ricerca visibile solo su schermi medi e grandi -->
-                <form class="d-none d-md-flex mx-auto" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                 <?php if($title == 'Shop Piante' || $title == 'Shop Borse' || $title == 'Shop Gioielli') : ?>
+                <form class="d-none d-md-flex mx-auto" role="search" method="post" action="controller_prodotti.php?action=search&type-shop=<?php if($title == 'Shop Piante'){
+                                echo 'Piante';
+                            }elseif($title == 'Shop Borse'){
+                                echo 'Borse';
+                            } else { echo 'Gioielli';
+
+                            }?>">
+                    <input class="form-control me-2" type="search" placeholder="<?php if($title == 'Shop Piante'){ echo 'Ricerca pianta';} elseif($title == 'Shop Borse'){ echo 'Ricerca Borsa';} else{echo 'Ricerca gioiello';}?>" aria-label="Search" name="ricerca" id="ricerca">
+                    <div class="mb-3">
+                      
+                         
+                    </div>
+                    
                     <button class="btn search" type="submit">Cerca</button>
                 </form>
+                <?php endif; ?>
                  <!-- Pulsante di ricerca per dispositivi mobili -->
+                 <?php if($title == 'Shop Piante' || $title == 'Shop Borse' || $title == 'Shop Gioielli') : ?>
                 <div class="d-flex ms-auto pe-3">
                     <button class="d-md-none btn btn-outline-secondary" onclick="toggleSearchOverlay()">
                         🔍
                     </button>
                 </div>
+                <?php endif; ?>
                 <!-- Bottone per il menu a scomparsa su dispositivi mobili -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
@@ -95,7 +110,23 @@
         <!-- Overlay per la ricerca su dispositivi mobili -->
         <div id="searchOverlay" class="search-overlay">
         <div class="search-box">
-            <input class="form-control" type="search" placeholder="Cerca..." aria-label="Search">
+            <form  method="post" action="controller_prodotti.php?action=search&type-shop=<?php if($title == 'Shop Piante'){
+                                echo 'Piante';
+                            }elseif($title == 'Shop Borse'){
+                                echo 'Borse';
+                            } else { echo 'Gioielli';
+
+                            }?>">
+            <input class="form-control" type="search" placeholder="Cerca..." aria-label="Search" name="ricerca" id="ricerca">
+            <button
+                type="submit"
+                class="btn btn-primary mt-3"
+            >
+                Cerca
+            </button>
+            
+            </form>
+            
             <button class="btn btn-outline-danger mt-2" onclick="toggleSearchOverlay()">Chiudi</button>
         </div>
     </div>
