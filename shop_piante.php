@@ -8,12 +8,10 @@ if(isset($_SESSION['prodotti_ricerca'])) {
     echo  count($_SESSION['prodotti_ricerca']);
     $prodotti_ricerca = $_SESSION['prodotti_ricerca'];
     $_SESSION['prodotti_ricerca'] = [];
-    echo "sono nell'if";
-    echo count($prodotti_ricerca);
-    echo  count($_SESSION['prodotti_ricerca']);
+   
 } else { 
     $_SESSION['prodotti_ricerca']= []; 
-    echo "sono nell'else";
+    
 } 
 // Funzione che recupera i dati dei prodotti dal database e li divide in categorie
 function showPiante()
