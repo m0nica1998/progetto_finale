@@ -1,33 +1,43 @@
 <?php
-// Avvia la sessione per gestire variabili globali tra le pagine
+// Avvia una sessione per gestire variabili globali tra le pagine
 session_start();
 
-// Funzione per recuperare i prodotti di tipo "gioielli" dal database
+$prodotti_ricerca = [];
+if(isset($_SESSION['prodotti_ricerca'])) { 
+    echo count($prodotti_ricerca);
+    echo  count($_SESSION['prodotti_ricerca']);
+    $prodotti_ricerca = $_SESSION['prodotti_ricerca'];
+    $_SESSION['prodotti_ricerca'] = [];
+   
+} else { 
+    $_SESSION['prodotti_ricerca']= []; 
+    
+} 
+// Funzione che recupera i dati dei prodotti dal database e li divide in categorie
 function showGioielli()
 {
 
-   // Connessione al database MySQL utilizzando le credenziali
+     // Connessione al database MySQL utilizzando le credenziali
     $connessione = new mysqli('localhost', 'root', 'root', 'db_tabacchi');
-    // Verifica se la connessione al database è riuscita
+    // Verifica se la connessione è riuscita
     if ($connessione->connect_error) {
         // Se la connessione fallisce, termina lo script e mostra il messaggio di errore
         die("Errore di connessione: " . $connessione->connect_error);
     }
-
-        // Query SQL per selezionare i dati di tutti i prodotti dalla tabella 'prodotti'
+// Query SQL per selezionare i dati di tutti i prodotti dalla tabella 'prodotti'
     $query = "SELECT id, nome, tipo, prezzo, immagine, fileData, disp_magazzino FROM prodotti";
-    // Esegui la query e memorizza il risultato
+     // Esegui la query e memorizza il risultato
     if ($result = $connessione->query($query)) {
 
-        // Verifica se ci sono risultati nella tabella
+        //verifica se sono presenti dati nella tabella
         if ($result->num_rows > 0) {
-            // Crea gli array per i diversi tipi di prodotti
+                // Inizializza gli array per ogni tipo di prodotto
             $piante = [];
             $borse = [];
             $gioielli = [];
-            // Ciclo attraverso i risultati della query
+             // Ciclo attraverso ogni prodotto nel risultato della query
             while ($row = $result->fetch_assoc()) {
-                // Se il prodotto è di tipo "piante", lo aggiungi all'array delle piante
+                // Se il prodotto è di tipo "piante", lo aggiunge all'array delle piante
                 if ($row['tipo'] == "piante") {
                     $pianta = [
                         "id" => $row['id'],
@@ -40,7 +50,7 @@ function showGioielli()
 
                     ];
                     array_push($piante, $pianta);
-                  // Se il prodotto è di tipo "borse", lo aggiungi all'array delle borse
+                    // Se il prodotto è di tipo "borse", lo aggiunge all'array delle borse
                 } elseif ($row['tipo'] == "borse") {
                     $borsa = [
                         "id" => $row['id'],
@@ -53,8 +63,8 @@ function showGioielli()
 
                     ];
                     array_push($borse, $borsa);
-                } // Se il prodotto è di tipo "gioielli", lo aggiungi all'array dei gioielli
-                else {
+                } else {
+                    // Se il prodotto è di tipo "gioielli", lo aggiunge all'array dei gioielli
                     $gioiello = [
                         "id" => $row['id'],
                         "nome" => $row['nome'],
@@ -68,37 +78,91 @@ function showGioielli()
                     array_push($gioielli, $gioiello);
                 }
             }
-           // Salva i dati dei prodotti nelle sessioni, così possono essere usati in altre pagine
+           // Salva i dati delle piante, borse e gioielli in sessione per l'accesso successivo
             $_SESSION['piante'] = $piante;
             $_SESSION['borse'] = $borse;
             $_SESSION['gioielli'] = $gioielli;
            
         } else {
-            // Se non ci sono dati, salva il messaggio di errore nella sessione
+            // Se non ci sono prodotti nel sistema, salva il messaggio di errore in sessione
             $_SESSION['errore'] = "Non ci sono prodotti nel sistema";
           
         }
     }
 }
 
-// Chiamata alla funzione per recuperare i prodotti di tipo "gioielli"
-
+// Chiamata alla funzione per recuperare i dati delle piante
 showGioielli();
 
 
-// Imposta il titolo della pagina
+// Impostazione del titolo della pagina
 $title = 'Shop Gioielli';
 
 // Includi l'header del sito
 include 'header.php'; ?>
-
-<main class="main-shop-gioielli">
+<main class="main-shop-borse">
     <div class="container">
         <div class="row">
-            <!-- Ciclo su tutti i prodotti di tipo "gioielli" salvati in sessione -->
-            <?php for ($i = 0; $i < count($_SESSION['gioielli']); $i++): ?>
+            <?php if(count($prodotti_ricerca) >0) : ?>
+            <?php 
+            // Ciclo su tutti i prodotti di tipo "piante" salvati in sessione
+            for ($i = 0; $i < count($prodotti_ricerca); $i++): ?>
+            
                 <div class="col-sm col-md-3 col-lg-3 d-flex flex-column mt-4">
-                     <!-- Header della card del prodotto -->
+                      <!-- Header della card del prodotto -->
+                    <div class="header-card d-flex ">
+                        <div class="gioiello col-4 ms-1 me-1 ">
+
+                        </div>
+                        <div class="text col-8">
+                            <!-- Nome del prodotto -->
+                            <p class="fw-bold testo-titolo"><?php echo $prodotti_ricerca[$i]['nome'] ?></p>
+                        </div>
+                    </div>
+                    <div class="main-card card-equal-height">
+                        <div class="row justify-content-center align-items-center flex-column">
+                            <div class="col d-flex justify-content-center position-relative">
+                                <!-- Se il prodotto è nelle posizioni specifiche, aggiungi l'etichetta "HOT" o "NEW" -->
+                                <?php if (in_array($i, [1])): ?>
+                                    <div class="ribbon bg-green">HOT</div>
+                                <?php endif; ?>
+                                <?php if (in_array($i, [0])): ?>
+                                    <div class="ribbon bg-orange">NEW</div>
+                                <?php endif; ?>
+                                 <!-- Immagine del prodotto, con classe per l'opacità se il prodotto è esaurito -->
+                                <img src="imgs/<?php echo $prodotti_ricerca[$i]['immagine'] ?>" alt="<?php echo $prodotti_ricerca[$i]['nome'] ?>" class="img <?php if ($prodotti_ricerca[$i]['disp_magazzino'] == 0) {
+                                                                                                                                                                    echo "opaca";
+                                                                                                                                                                } ?>">
+                            </div>
+                            <div class="col text-center mt-2">
+                                <!-- Prezzo del prodotto -->
+                                <p class="fw-bold">Prezzo <?php echo $prodotti_ricerca[$i]['prezzo'] ?> €</p>
+                                <div class="footer-card d-flex justify-content-center">
+                                    <!-- Se il prodotto è esaurito, il bottone "Acquista" è disabilitato -->
+                                    <?php if ($prodotti_ricerca[$i]['disp_magazzino'] == 0): ?>
+                                        <button type="button" class="btn btn-shop" disabled
+                                            style="cursor: not-allowed; background-color: #ccc; color: #666;">
+                                            Esaurito
+                                        </button>
+                                    <?php else: ?>
+                                        <!-- Altrimenti, il bottone "Acquista" apre la pagina del carrello -->
+                                        <button type="button" class="btn btn-shop" onclick="window.open('carrello.php', '_blank');">
+                                            Acquista
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endfor; ?>
+            
+            <?php else : ?>
+                <?php 
+            // Ciclo su tutti i prodotti di tipo "piante" salvati in sessione
+            for ($i = 0; $i < count($_SESSION['gioielli']); $i++): ?>
+                <div class="col-sm col-md-3 col-lg-3 d-flex flex-column mt-4">
+                      <!-- Header della card del prodotto -->
                     <div class="header-card d-flex ">
                         <div class="gioiello col-4 ms-1 me-1 ">
 
@@ -111,30 +175,30 @@ include 'header.php'; ?>
                     <div class="main-card card-equal-height">
                         <div class="row justify-content-center align-items-center flex-column">
                             <div class="col d-flex justify-content-center position-relative">
-                                 <!-- Se il prodotto si trova nelle posizioni specifiche, aggiungi l'etichetta "HOT" o "NEW" -->
+                                <!-- Se il prodotto è nelle posizioni specifiche, aggiungi l'etichetta "HOT" o "NEW" -->
                                 <?php if (in_array($i, [1])): ?>
                                     <div class="ribbon bg-green">HOT</div>
                                 <?php endif; ?>
                                 <?php if (in_array($i, [0])): ?>
                                     <div class="ribbon bg-orange">NEW</div>
                                 <?php endif; ?>
-                                <!-- Mostra l'immagine del prodotto, applicando una classe 'opaca' se il prodotto è esaurito -->
+                                 <!-- Immagine del prodotto, con classe per l'opacità se il prodotto è esaurito -->
                                 <img src="imgs/<?php echo $_SESSION['gioielli'][$i]['immagine'] ?>" alt="<?php echo $_SESSION['gioielli'][$i]['nome'] ?>" class="img <?php if ($_SESSION['gioielli'][$i]['disp_magazzino'] == 0) {
                                                                                                                                                                     echo "opaca";
                                                                                                                                                                 } ?>">
                             </div>
                             <div class="col text-center mt-2">
-                                 <!-- Visualizza il prezzo del prodotto -->
+                                <!-- Prezzo del prodotto -->
                                 <p class="fw-bold">Prezzo <?php echo $_SESSION['gioielli'][$i]['prezzo'] ?> €</p>
                                 <div class="footer-card d-flex justify-content-center">
-                                     <!-- Se il prodotto è esaurito, disabilita il bottone "Acquista" -->
+                                    <!-- Se il prodotto è esaurito, il bottone "Acquista" è disabilitato -->
                                     <?php if ($_SESSION['gioielli'][$i]['disp_magazzino'] == 0): ?>
                                         <button type="button" class="btn btn-shop" disabled
                                             style="cursor: not-allowed; background-color: #ccc; color: #666;">
                                             Esaurito
                                         </button>
                                     <?php else: ?>
-                                         <!-- Altrimenti, il bottone "Acquista" apre la pagina del carrello -->
+                                        <!-- Altrimenti, il bottone "Acquista" apre la pagina del carrello -->
                                         <button type="button" class="btn btn-shop" onclick="window.open('carrello.php', '_blank');">
                                             Acquista
                                         </button>
@@ -145,8 +209,9 @@ include 'header.php'; ?>
                     </div>
                 </div>
             <?php endfor; ?>
+                <?php endif; ?>
         </div>
     </div>
 </main>
-<!-- Includi il footer del sito -->
+<!-- Includi il footer della pagina -->
 <?php include 'footer.php'; ?>
