@@ -40,15 +40,7 @@ include 'header.php' ?>
                             </div>
                         </div>
                         <h3 class="mt-4">Pagamento</h3>
-                        <div class="mb-3">
-                            <label class="form-label">Carte accettate</label>
-                            <div class="icon-container">
-                                <i class="fa fa-cc-visa" style="color:navy;"></i>
-                                <i class="fa fa-cc-amex" style="color:blue;"></i>
-                                <i class="fa fa-cc-mastercard" style="color:red;"></i>
-                                <i class="fa fa-cc-discover" style="color:orange;"></i>
-                            </div>
-                        </div>
+                       
                         <div class="mb-3">
                             <label for="cname" class="form-label">Nome sulla carta</label>
                             <input type="text" class="form-control" id="cname" name="cardname" placeholder="Mario Rossi">
