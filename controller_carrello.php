@@ -8,18 +8,65 @@ if ($azione == 'create') {
   } elseif($azione == 'edit'){
     edit_carrello();
   }
-function create_carrello(){
-if($_SESSION['name'] != ""){
-// recupero id, tipo, prezzo, nome immagine e disponibilità prodotto
-// creare variabile sessione per il carrello (se non esiste)
-// aggiungo il prodotto al carrello
-//ritorno alla pagina del prodotto in base al tipo
-} else {
-  $_SESSION['errore'] = "Effettua il login";
-  header("Location: login.php");
-  exit();
+  function create_carrello(){
+    if($_SESSION['name'] != ""){
+        // Recupero dati del prodotto
+        $id = $_GET['id'];
+        $nome = $_GET['nome'];
+        $prezzo = $_GET['prezzo'];
+        $tipo = $_GET['tipo'];
+        $immagine = $_GET['immagine'];
+        $fileData = $_GET['fileData'];
+        $disp_magazzino = $_GET['disp_magazzino'];
+
+        // Creazione della variabile di sessione per il carrello (se non esiste)
+        if(!isset($_SESSION['carrello'])){
+            $_SESSION['carrello'] = [];
+        }
+
+        // Controllo se il prodotto è già presente nel carrello
+        $trovato = false;
+        for ($i = 0; $i < count($_SESSION['carrello']); $i++) {
+            if ($_SESSION['carrello'][$i]['id'] == $id) {
+                // Se il prodotto è già presente, aumento la quantità
+                $_SESSION['carrello'][$i]['quantita'] += 1;
+                $trovato = true;
+                break;
+            }
+        }
+
+        // Se il prodotto non è stato trovato, lo aggiungo al carrello
+        if (!$trovato) {
+            $prodotto = [
+                "id" => $id,
+                "nome" => $nome,
+                "tipo" => $tipo,
+                "prezzo" => $prezzo,
+                "immagine" => $immagine,
+                "fileData" => $fileData,
+                "disp_magazzino" => $disp_magazzino,
+                "quantita" => 1
+            ];
+            array_push($_SESSION["carrello"], $prodotto);
+        }
+
+        // Ritorno alla pagina del prodotto in base al tipo
+        if($tipo == "piante"){
+            header("Location: shop_piante.php");
+            exit();
+        } elseif($tipo == "borse"){
+            header("Location: shop_borse.php");
+            exit();
+        } elseif($tipo == "gioielli"){
+            header("Location: shop_gioielli.php");
+            exit();
+        }
+    } else {
+        $_SESSION['errore'] = "Effettua il login";
+        header("Location: login.php");
+        exit();
+    }
 }
-};
 
 function delete_carrello(){
   if($_SESSION['name'] != ""){
