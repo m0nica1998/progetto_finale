@@ -76,12 +76,23 @@ if ($azione == 'create') {
 
 function delete_carrello(){
   if($_SESSION['name'] != ""){
+
 //recupero id prodotto
 $id = $_GET['id'];
 echo $id;
 // ciclo nel carrello 
 // quando l'id del prodotto nel carrello coincide con quello recuperato, rimuovo il prodotto dal carrello
+for ($i = 0; $i < count($_SESSION['carrello']); $i++) {
+  if ($_SESSION['carrello'][$i]['id'] == $id) {
+      array_splice($_SESSION['carrello'], $i, 1); // Rimuove l'elemento e riordina gli indici
+      break; // Esce dal ciclo per evitare problemi di indice
+  }
+}
+
 // ritorno alla pagina del carrello
+header("Location: carrello.php");
+exit();
+
   } else {
     header("Location: login.php");
     exit();
@@ -91,6 +102,10 @@ echo $id;
 function edit_carrello(){
   if($_SESSION['name'] != ""){
 // recupero id e disponibilità in magazzino 
+$id = $_GET["id"];
+echo $id;
+$method = $_GET["method"];
+echo $method;
 // ciclo nel carrello 
 // quando l'id del prodotto nel carrello coincide con quello recuperato, verifico che ci sia il prodotto in magazzino, modifico la quantità
 // ritorno al carrello
