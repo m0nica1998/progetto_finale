@@ -30,7 +30,7 @@ include 'header.php' ?>
                         <th scope="col"></th>
                         <th scope="col">Immagine</th>
                         <th scope="col">Nome</th>
-                        <th scope="col">Quantità</th>
+                        <th scope="col" class="text-start">Quantità</th>
                         <th scope="col">Prezzo</th>
 
                     </tr>
@@ -55,13 +55,15 @@ include 'header.php' ?>
                         </td>
                         <td><img src="imgs/<?php echo $_SESSION["carrello"][$i]['immagine'] ?>" alt="<?php echo $_SESSION["carrello"][$i]['nome'] ?>" width="50" height="50"></td>
                         <td><?php echo $_SESSION["carrello"][$i]['nome'] ?></td>
-                        <td><?php echo $_SESSION["carrello"][$i]['quantita'] ?>
-                        <form action="controller_carrello.php?action=edit&method=up&id=<?php echo $_SESSION["carrello"][$i]['id']?>" method="post">
+                        <td class="d-flex min-h-100 pb-4"><?php echo $_SESSION["carrello"][$i]['quantita'] ?>
+                        <form class="ps-2 pe-2" action="controller_carrello.php?action=edit&method=up&id=<?php echo $_SESSION["carrello"][$i]['id']?>" method="post">
                             <button
                                 type="submit"
                                 class="btn btn-primary"
                             >
-                                up
+                            <i class="fas fa-caret-up"></i>  <!-- Triangolo su -->
+
+
                             </button>
                             
                         </form>
@@ -70,7 +72,7 @@ include 'header.php' ?>
                                 type="submit"
                                 class="btn btn-primary"
                             >
-                                down
+                            <i class="fas fa-caret-down"></i>  <!-- Triangolo giù -->
                             </button>
                             
                         </form>
