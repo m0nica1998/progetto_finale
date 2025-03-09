@@ -29,9 +29,15 @@ if ($azione == 'create') {
         for ($i = 0; $i < count($_SESSION['carrello']); $i++) {
             if ($_SESSION['carrello'][$i]['id'] == $id) {
                 // Se il prodotto è già presente, aumento la quantità
-                $_SESSION['carrello'][$i]['quantita'] += 1;
-                $trovato = true;
-                break;
+                if(( $_SESSION['carrello'][$i]['quantita'] += 1) <=  $_SESSION['carrello'][$i]['disp_magazzino'] ){
+                  $_SESSION['carrello'][$i]['quantita'] += 1;
+                  $trovato = true;
+                  break;
+                } else {
+                  $_SESSION['errore'] = "Non ci sono abbastanza prodotti diaponibili";
+                  break;
+                }
+               
             }
         }
 
@@ -71,6 +77,8 @@ if ($azione == 'create') {
 function delete_carrello(){
   if($_SESSION['name'] != ""){
 //recupero id prodotto
+$id = $_GET['id'];
+echo $id;
 // ciclo nel carrello 
 // quando l'id del prodotto nel carrello coincide con quello recuperato, rimuovo il prodotto dal carrello
 // ritorno alla pagina del carrello
