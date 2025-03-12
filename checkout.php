@@ -1,6 +1,13 @@
 <?php 
 session_start();
+$tot_quantita = 0;
+$totale_carrello = 0;
+$tot_prodotto = 0;
 $title = 'CheckOut';
+for($i = 0; $i< count($_SESSION['carrello']); $i++) {
+    $tot_quantita += $_SESSION['carrello'][$i]['quantita'];
+}
+
 include 'header.php' ?>
 
 <main class="main-checkout container ">
@@ -11,7 +18,7 @@ include 'header.php' ?>
         <div class="row">
             <div class="col-md-8">
                 <div class="card p-4">
-                    <form action="/action_page.php">
+                    <form action="controller_ordini.php?action=create" method="post">
                         <h3>Indirizzo fatturazione</h3>
                         <div class="mb-3">
                             <label for="fname" class="form-label">Nome completo</label>
@@ -73,13 +80,17 @@ include 'header.php' ?>
             </div>
             <div class="col-md-4">
                 <div class="card p-4">
-                    <h4>Carrello <span class="float-end"><i class="fa fa-shopping-cart"></i> <b>4</b></span></h4>
-                    <p><a href="#" class="text-decoration-none">Prodotto 1</a> <span class="float-end">€15</span></p>
-                    <p><a href="#" class="text-decoration-none">Prodotto 2</a> <span class="float-end">€5</span></p>
-                    <p><a href="#" class="text-decoration-none">Prodotto 3</a> <span class="float-end">€8</span></p>
-                    <p><a href="#" class="text-decoration-none">Prodotto 4</a> <span class="float-end">€2</span></p>
+                    <h4>Carrello <span class="float-end"><i class="fa fa-shopping-cart"></i> <b><?php echo $tot_quantita?></b></span></h4>
+                    <?php for($i = 0; $i< count($_SESSION['carrello']); $i++): ?> 
+                    <?php $tot_prodotto = $_SESSION['carrello'][$i]['prezzo']* $_SESSION['carrello'][$i]['quantita'];
+                    $totale_carrello += $tot_prodotto;
+                     ?>
+                    
+                    <p><a href="#" class="text-decoration-none"><?php echo $_SESSION['carrello'][$i]['nome']?></a> <span class="float-end"> <?php echo $_SESSION['carrello'][$i]['prezzo']* $_SESSION['carrello'][$i]['quantita'] ?> €</span></p>
+                    
+                    <?php endfor; ?>
                     <hr>
-                    <p>Totale <span class="float-end"><b>€30</b></span></p>
+                    <p>Totale <span class="float-end"><b><?php echo $totale_carrello?></b> €</span></p>
                 </div>
             </div>
         </div>

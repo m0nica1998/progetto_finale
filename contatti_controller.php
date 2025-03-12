@@ -90,6 +90,7 @@ if ($stmt_insert->execute()) {
     $connessione->close();
   //  session_unset();
   //  session_destroy();
+    
     $_SESSION['name'] = $nome;
     $_SESSION['is_admin'] = 0;
     header("Location: utente.php"); // Reindirizzamento alla pagina utente

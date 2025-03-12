@@ -122,9 +122,7 @@
                 data-bs-target="#modal_lista_prodotti_id">
                 Lista prodotti
             </button>
-        <?php endif; ?>
-
-        <!-- Modale per visualizzare i prodotti -->
+             <!-- Modale per visualizzare i prodotti -->
         <div
             class="modal fade"
             id="modal_lista_prodotti_id"
@@ -301,6 +299,9 @@
                 </div>
             </div>
         </div>
+        <?php endif; ?>
+
+       
 
 
 
@@ -310,18 +311,6 @@
 
 
    
-    <script>
-        var modal_lista_prodotti_id = document.getElementById('modal_lista_prodotti_id');
-
-        modal_lista_prodotti_id.addEventListener('show.bs.modal', function(event) {
-           
-            let button = event.relatedTarget;
-            
-            let recipient = button.getAttribute('data-bs-whatever');
-
-           
-        });
-    </script>
     <!-- Bottone Logout -->
     <div class="text-center pb-2">
         <form action="login_controller.php?action=logout" method="post">
@@ -329,4 +318,5 @@
         </form>
     </div>
 
+   
 </main>

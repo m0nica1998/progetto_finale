@@ -19,6 +19,8 @@ include 'header.php' ?>
                 <p>Quantità: <?php echo $_SESSION['carrello'][$i]['quantita']?> </p>
             </div>
           </div>  -->
+          <?php if(isset($_SESSION['carrello']) && $_SESSION['carrello'] != []) : ?>
+
           <div
             class="table-responsive"
           >
@@ -35,6 +37,7 @@ include 'header.php' ?>
 
                     </tr>
                 </thead>
+               
                 <?php for($i = 0; $i < count($_SESSION["carrello"]); $i++): ?>
                     <?php $totale_prezzo_prodotto = $_SESSION["carrello"][$i]['prezzo'] * $_SESSION["carrello"][$i]['quantita']; 
                     $totale_carrello += $totale_prezzo_prodotto;
@@ -83,6 +86,7 @@ include 'header.php' ?>
                 </tbody>
                 
                 <?php endfor; ?>
+                
                 <tfoot><tr>
                     <td></td>
                     <td></td>
@@ -92,9 +96,12 @@ include 'header.php' ?>
                 </tr></tfoot>
             </table>
           </div>
-          
-       
+          <?php else : ?>
+            <h3>Il carrello è vuoto</h3>
+          <?php endif; ?>
+        <?php if(!$_SESSION['carrello'] == []) : ?>
         <a href="checkout.php" target="_blank" class="btn btn-danger btn-custom">Procedi al checkout</a>
+        <?php endif; ?>
         <?php else : ?> 
              <a href="login.php" target="_blank" class="btn btn-danger btn-custom">Effettua il login </a>
         <?php endif; ?>

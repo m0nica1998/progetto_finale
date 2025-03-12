@@ -28,7 +28,7 @@ function create_carrello()
     // Controllo se il prodotto è già presente nel carrello
     $trovato = false;
     for ($i = 0; $i < count($_SESSION['carrello']); $i++) {
-      if ($_SESSION['carrello'][$i]['id'] == $id) {
+      if ($_SESSION['carrello'][$i]['id'] == $id && $_SESSION['carrello'][$i]['tipo'] == $tipo) {
         // Se il prodotto è già presente, aumento la quantità
         if (($_SESSION['carrello'][$i]['quantita'] += 1) <=  $_SESSION['carrello'][$i]['disp_magazzino']) {
           $_SESSION['carrello'][$i]['quantita'] + 1;
@@ -43,6 +43,7 @@ function create_carrello()
 
     // Se il prodotto non è stato trovato, lo aggiungo al carrello
     if (!$trovato) {
+     
       $prodotto = [
         "id" => $id,
         "nome" => $nome,
@@ -53,7 +54,9 @@ function create_carrello()
         "disp_magazzino" => $disp_magazzino,
         "quantita" => 1
       ];
+      
       array_push($_SESSION["carrello"], $prodotto);
+     
     }
 
     // Ritorno alla pagina del prodotto in base al tipo
@@ -61,7 +64,7 @@ function create_carrello()
       header("Location: shop_piante.php");
       exit();
     } elseif ($tipo == "borse") {
-      header("Location: shop_borse.php");
+     header("Location: shop_borse.php");
       exit();
     } elseif ($tipo == "gioielli") {
       header("Location: shop_gioielli.php");

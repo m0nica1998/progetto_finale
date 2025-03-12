@@ -44,7 +44,21 @@
         var triggerEl = document.querySelector("#navId a");
         bootstrap.Tab.getInstance(triggerEl).show(); // Select tab by name
     </script>
-   
+
+    <?php if($title ==  "Area personale" ) :?>
+    <script>
+        var modal_lista_prodotti_id = document.getElementById('modal_lista_prodotti_id');
+
+        modal_lista_prodotti_id.addEventListener('show.bs.modal', function(event) {
+           
+            let button = event.relatedTarget;
+            
+            let recipient = button.getAttribute('data-bs-whatever');
+
+           
+        });
+    </script>
+    <?php endif; ?>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
 </body>

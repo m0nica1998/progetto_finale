@@ -62,7 +62,7 @@ function login() {
     }
 
     // Query per selezionare l'utente con email corrispondente
-    $sql = "SELECT name, is_admin, password FROM users WHERE email = ?";
+    $sql = "SELECT id, name, is_admin, password FROM users WHERE email = ?";
     $stmt = $connessione->prepare($sql);
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -73,6 +73,8 @@ function login() {
         // Controllo se la password inserita corrisponde a quella memorizzata
         if ($pass == $row["password"]) {
             // Salva i dati dell'utente nella sessione
+            $_SESSION["id_user"] = $row["id"];
+            
             $_SESSION['name'] = $row["name"];
             $_SESSION['is_admin'] = $row["is_admin"];
             
@@ -86,8 +88,9 @@ function login() {
         } else {
              // Se la password è errata, mostra un messaggio di errore
             $_SESSION['errore-login'] = "Credenziali non valide.";
-            header("Location: login.php");
-            exit();
+           header("Location: login.php");
+           exit();
+           
         }
     } else {
         // Se l'utente non esiste, mostra un messaggio di errore

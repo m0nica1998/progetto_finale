@@ -146,9 +146,11 @@ include 'header.php'; ?>
                                         </button>
                                     <?php else: ?>
                                         <!-- Altrimenti, il bottone "Acquista" apre la pagina del carrello -->
-                                        <button type="button" class="btn btn-shop" onclick="window.open('carrello.php', '_blank');">
-                                            Acquista
-                                        </button>
+                                        <form action="controller_carrello.php?action=create&id=<?php echo $prodotti_ricerca[$i]['id'] ?>&nome=<?php echo $prodotti_ricerca[$i]['nome'] ?>&prezzo=<?php echo $prodotti_ricerca[$i]['prezzo'] ?>&tipo=<?php echo $prodotti_ricerca[$i]['tipo'] ?>&immagine=<?php echo $prodotti_ricerca[$i]['immagine'] ?>&fileData=<?php echo $prodotti_ricerca[$i]['fileData'] ?>&disp_magazzino=<?php echo $prodotti_ricerca[$i]['disp_magazzino'] ?>" method="post">
+                                                <button type="submit" class="btn btn-shop">
+                                                    Acquista
+                                                </button>
+                                            </form>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -199,9 +201,12 @@ include 'header.php'; ?>
                                         </button>
                                     <?php else: ?>
                                         <!-- Altrimenti, il bottone "Acquista" apre la pagina del carrello -->
-                                        <button type="button" class="btn btn-shop" onclick="window.open('carrello.php', '_blank');">
-                                            Acquista
-                                        </button>
+                                        <form action="controller_carrello.php?action=create&id=<?php echo $_SESSION['gioielli'][$i]['id'] ?>&nome=<?php echo $_SESSION['gioielli'][$i]['nome'] ?>&prezzo=<?php echo $_SESSION['gioielli'][$i]['prezzo'] ?>&tipo=<?php echo $_SESSION['gioielli'][$i]['tipo'] ?>&immagine=<?php echo $_SESSION['gioielli'][$i]['immagine'] ?>&fileData=<?php echo $_SESSION['gioielli'][$i]['fileData'] ?>&disp_magazzino=<?php echo $_SESSION['gioielli'][$i]['disp_magazzino'] ?>" method="post">
+
+                                                <button type="submit" class="btn btn-shop">
+                                                    Acquista
+                                                </button>
+                                            </form>
                                     <?php endif; ?>
                                 </div>
                             </div>
