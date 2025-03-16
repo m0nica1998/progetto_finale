@@ -34,6 +34,44 @@ function showAll(){
   }
 }
 
+function showOrdiniUtente(){
+  // Connessione al DB
+  $connessione = new mysqli('localhost', 'root', 'root', 'db_tabacchi');
+  if ($connessione->connect_error) {
+    die("Errore di connessione: " . $connessione->connect_error);
+  }
+
+  $query = "SELECT id, utente,  prezzo, data FROM ordini WHERE utente=? ORDER BY data DESC";
+  $stmt = $connessione->prepare($query);
+$stmt->bind_param("i", $_SESSION['id_user']);
+$stmt->execute();
+$result = $stmt->get_result();
+  
+
+    //verifica se sono presenti dati nella tabella
+    if ($result->num_rows > 0) {
+      $ordini = [];
+      while ($row = $result->fetch_assoc()){
+        $ordine = [
+          "id" => $row['id'],
+          "utente" => $row['utente'],
+          "prezzo" => $row['prezzo'],
+          "data" => $row['data']
+
+        ];
+        array_push($ordini, $ordine);
+      }
+      $_SESSION['ordini_utente'] = $ordini;
+     
+    } 
+   else {
+    
+      $_SESSION['errore'] = "Non ci sono prodotti nel sistema";
+     
+    
+  }
+}
+
 // Avvia la sessione per gestire variabili globali tra le pagine
 session_start();
 // Imposta il titolo della pagina
@@ -47,6 +85,7 @@ echo $_SESSION['is_admin'];
 if ($_SESSION['is_admin'] == 0) {
   // Se l'utente non è amministratore (is_admin == 0), mostra "pagina user" e include la pagina dell'utente
   echo "pagina user";
+  showOrdiniUtente();
   include('homepage_user.php');
 } else {
   // Se l'utente è amministratore (is_admin != 0), mostra "pagina admin" e include la pagina dell'amministratore

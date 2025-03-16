@@ -19,6 +19,10 @@ if ($action == 'create') {
 
 
 // Funzione per creare un nuovo prodotto nel database
+/**
+ * Summary of create
+ * @return never
+ */
 function create()
 {
   $_SESSION['errore'] = "";
