@@ -307,8 +307,97 @@
 
 
     </div>
-
-
+    <!-- Modal trigger button -->
+    <button
+        type="button"
+        class="btn btn-primary pb-3 pt-3"
+        data-bs-toggle="modal"
+        data-bs-target="#modaleOrdiniId"
+    >
+        Ordini
+    </button>
+    
+    <!-- Modal Body -->
+    <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+    <div
+        class="modal fade"
+        id="modaleOrdiniId"
+        tabindex="-1"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        
+        role="dialog"
+        aria-labelledby="modaleOrdiniTitoloId"
+        aria-hidden="true"
+    >
+        <div
+            class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm"
+            role="document"
+        >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modaleOrdiniTitoloId">
+                        Lista ordini
+                    </h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <?php if(isset($_SESSION['ordini']) && count($_SESSION['ordini']) > 0) : ?>
+                        <div
+                            class="table-responsive"
+                        >
+                            <table
+                                class="table table-primary"
+                            >
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Utente</th>
+                                        <th scope="col">Prezzo</th>
+                                        <th scope="col">data</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php for($i= 0; $i<count($_SESSION['ordini']); $i++) : ?>
+                                    <tr class="">
+                                        <td scope="row"><?php echo $_SESSION['ordini'][$i]['id']?></td>
+                                        <td><?php echo $_SESSION['ordini'][$i]['utente']?></td>
+                                        <td><?php echo $_SESSION['ordini'][$i]['prezzo']?></td>
+                                        <td><?php echo $_SESSION['ordini'][$i]['data']?></td>
+                                    </tr>
+                                <?php endfor; ?>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        
+                    <?php else : ?>
+                        <h2>Non ci sono ordini evasi</h2>
+                    <?php endif; ?>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                    >
+                        Chiudi
+                    </button>
+                        
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+     
 
    
     <!-- Bottone Logout -->
