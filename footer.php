@@ -58,7 +58,15 @@
            
         });
     </script>
+    <!-- Optional: Place to the bottom of scripts -->
+    <script>
+        const myModal = new bootstrap.Modal(
+            document.getElementById("modaleOrdiniId"),
+            options,
+        );
+    </script>
     <?php endif; ?>
+    
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
 </body>
