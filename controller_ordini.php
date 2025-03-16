@@ -9,10 +9,13 @@ if ($azione == 'create') {
   // Implementa la funzione delete_ordine()
 } elseif ($azione == 'edit') {
   // Implementa la funzione edit_ordine()
+} elseif($azione == 'showAll') {
+  showAll();
 }
 
 function create_ordine()
 {
+  
   $id_user = $_SESSION['id_user'];
   $carrello = $_SESSION['carrello'];
   $totale = 0;
@@ -25,7 +28,7 @@ function create_ordine()
   // Calcolo del totale dell'ordine
   foreach ($carrello as $prodotto) {
     $totale += $prodotto['prezzo'] * $prodotto['quantita'];
-    array_push($id_prodotti, $mappa_prodotto = ['id' => $prodotto['id'], 'quantita' => $prodotto['quantita']]);
+    array_push($id_prodotti, $mappa_prodotto = ['id' => $prodotto['id'], 'quantita' => $prodotto['quantita'], 'disp_magazzino' => $prodotto['disp_magazzino']]);
   }
 
   // Connessione al database
@@ -73,8 +76,25 @@ function create_ordine()
       }
      //svuoto il carrello
      $_SESSION['carrello'] = [];
-    header('Location: index.php');
+     $query = "UPDATE prodotti SET disp_magazzino = ? WHERE id = ?";
+     $stmt_update = $connessione->prepare($query);
+      // Controllo se la preparazione della query è andata a buon fine
+      if (!$stmt_update) {
+        die("Errore nella preparazione della query: " . $connessione->error);
+      }
+         // Itero su ogni prodotto e lo inserisco nel database
+         var_dump($id_prodotti);
+         foreach ($id_prodotti as $id_prodotto) {
+        var_dump($id_prodotto);
+        echo $id_prodotto['id'];
+        echo $id_prodotto['quantita'];
+        $nuova_disp = $id_prodotto['disp_magazzino'] - $id_prodotto['quantita'];
+          $stmt_update->bind_param("ii",   $nuova_disp, $id_prodotto['id']);
+          $stmt_update->execute();
+        }
+    header('Location: messaggio_ordine.php');
     exit();
+    
     }
 
     // Aggiungere qui eventuali altre operazioni (es. inserire dettagli ordine)
@@ -90,4 +110,40 @@ function create_ordine()
   $connessione->close();
 
   
+}
+
+function showAll(){
+  // Connessione al DB
+  $connessione = new mysqli('localhost', 'root', 'root', 'db_tabacchi');
+  if ($connessione->connect_error) {
+    die("Errore di connessione: " . $connessione->connect_error);
+  }
+
+  $query = "SELECT id, utente,  prezzo, data FROM ordini ORDER BY data DESC";
+  if ($result = $connessione->query($query)) {
+
+    //verifica se sono presenti dati nella tabella
+    if ($result->num_rows > 0) {
+      $ordini = [];
+      while ($row = $result->fetch_assoc()){
+        $ordine = [
+          "id" => $row['id'],
+          "utente" => $row['utente'],
+          "prezzo" => $row['prezzo'],
+          "data" => $row['data']
+
+        ];
+        array_push($ordini, $ordine);
+      }
+      $_SESSION['ordini'] = $ordini;
+      header('Location: utente.php');
+      exit();
+    } 
+  } else {
+    
+      $_SESSION['errore'] = "Non ci sono prodotti nel sistema";
+      header('Location: utente.php');
+      exit();
+    
+  }
 }
