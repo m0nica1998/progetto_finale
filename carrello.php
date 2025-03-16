@@ -99,7 +99,7 @@ include 'header.php' ?>
           <?php else : ?>
             <h3>Il carrello è vuoto</h3>
           <?php endif; ?>
-        <?php if(!$_SESSION['carrello'] == []) : ?>
+        <?php if(isset($_SESSION['carrello']) && !$_SESSION['carrello'] == [] ) : ?>
         <a href="checkout.php" target="_blank" class="btn btn-danger btn-custom">Procedi al checkout</a>
         <?php endif; ?>
         <?php else : ?> 
