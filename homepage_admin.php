@@ -307,7 +307,7 @@
 
 
     </div>
-    <!-- Modal trigger button -->
+    <!-- Modale per visualizzare gli ordini -->
     <button
         type="button"
         class="btn btn-primary pb-3 pt-3"
@@ -317,8 +317,6 @@
         Ordini
     </button>
     
-    <!-- Modal Body -->
-    <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
     <div
         class="modal fade"
         id="modaleOrdiniId"

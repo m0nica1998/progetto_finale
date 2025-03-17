@@ -7,9 +7,6 @@ $title = 'Contatti';
 
 // Recupera eventuali messaggi di errore memorizzati nella sessione
 $error = (isset($_SESSION['errore']) ) ? $_SESSION['errore'] : "";
-
-// Stampa il nome completo memorizzato nella sessione (se presente)
-echo $_SESSION['nome_completo'];
  
 // Includi l'header della pagina
 include 'header.php';
@@ -23,7 +20,7 @@ $success = '';
 <main class="container  d-flex  flex-column align-items-center">
    
     <div class="container main-contatti card p-4 form-contatti  bg-light-gray shadow-lg rounded">
-         <!-- Titolo e logo -->
+         <!-- Titolo  -->
     <h1 class="text-center"><a href="index.php" target="_blank" class="text-decoration-none titolo">Tabacchi Cesario</a></h1>
 
         <h2 class="text-center">Registrati compilando il nostro form!</h2>
@@ -42,35 +39,45 @@ $success = '';
              <!-- Campo Nome e Cognome -->
             <div class="mb-3">
                 <label for="nome_completo" class="form-label">Nome e Cognome</label>
-                <input type="text" class="form-control" id="nome_completo" name="nome_completo" placeholder="Inserisci qui il tuo nome completo" value="<?php if(isset($_SESSION['nome_completo'])){
+                <input type="text" class="form-control" id="nome_completo" name="nome_completo" placeholder="Inserisci qui il tuo nome completo" value="<?php 
+                // Controlla se nella sessione esiste già un valore associato alla chiave nome_completo
+                if(isset($_SESSION['nome_completo'])){
                     echo $_SESSION['nome_completo'];
                 } ?>">
             </div>
             <!-- Campo Età -->
             <div class="mb-3">
                 <label for="eta" class="form-label">Età</label>
-                <input type="number" class="form-control" id="eta" name="eta" min="0" placeholder="Inserisci la tua età" value="<?php if(isset($_SESSION['eta'])){
+                <input type="number" class="form-control" id="eta" name="eta" min="0" placeholder="Inserisci la tua età" value="<?php 
+                // Controlla se nella sessione esiste già un valore associato alla chiave età
+                if(isset($_SESSION['eta'])){
                     echo $_SESSION['eta'];
                 } ?>">
             </div>
              <!-- Campo Data di Nascita -->
             <div class="mb-3">
                 <label for="data_nascita" class="form-label">Data di Nascita</label>
-                <input type="date" class="form-control" id="data_nascita" name="data_nascita" value="<?php if(isset($_SESSION['data_nascita'])){
+                <input type="date" class="form-control" id="data_nascita" name="data_nascita" value="<?php 
+                // Controlla se nella sessione esiste già un valore associato alla chiave data_nascita
+                if(isset($_SESSION['data_nascita'])){
                     echo $_SESSION['data_nascita'];
                 } ?>">
             </div>
              <!-- Campo Telefono -->
             <div class="mb-3">
                 <label for="telefono" class="form-label">Telefono</label>
-                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Inserisci il tuo numero di telefono" value="<?php if(isset($_SESSION['telefono'])){
+                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Inserisci il tuo numero di telefono" value="<?php 
+                // Controlla se nella sessione esiste già un valore associato alla chiave telefono
+                if(isset($_SESSION['telefono'])){
                     echo $_SESSION['telefono'];
                 } ?>">
             </div>
              <!-- Campo Email -->
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Inserisci la tua email" value="<?php if(isset($_SESSION['email'])){
+                <input type="email" class="form-control" id="email" name="email" placeholder="Inserisci la tua email" value="<?php 
+                // Controlla se nella sessione esiste già un valore associato alla chiave email
+                if(isset($_SESSION['email'])){
                     echo $_SESSION['email'];
                 } ?>">
             </div>
@@ -78,7 +85,9 @@ $success = '';
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <div class="input-group">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Inserisci la password" value="<?php if(isset($_SESSION['password'])){
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Inserisci la password" value="<?php 
+                    // Controlla se nella sessione esiste già un valore associato alla chiave password
+                    if(isset($_SESSION['password'])){
                     echo $_SESSION['password'];
                 } ?>">
                     <button class="btn btn-outline-secondary" type="button" id="toggle-password">👁️</button>
@@ -146,5 +155,5 @@ $success = '';
     });
 </script>
 
-<?php include 'footer.php' ?>
+<?php include 'footer.php' //include il footer della pagina ?> 
 

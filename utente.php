@@ -1,18 +1,24 @@
 <?php
 
+/**
+ * Funzione per mostrare tutti gli ordini
+ */
 function showAll(){
   // Connessione al DB
   $connessione = new mysqli('localhost', 'root', 'root', 'db_tabacchi');
+   // Verifica se la connessione ha avuto successo
   if ($connessione->connect_error) {
     die("Errore di connessione: " . $connessione->connect_error);
   }
-
+  // Query per ottenere gli ordini dalla tabella "ordini", ordinati per data decrescente
   $query = "SELECT id, utente,  prezzo, data FROM ordini ORDER BY data DESC";
+  // Esegui la query
   if ($result = $connessione->query($query)) {
 
     //verifica se sono presenti dati nella tabella
     if ($result->num_rows > 0) {
       $ordini = [];
+      // Estrai i dati dalla query e aggiungili all'array
       while ($row = $result->fetch_assoc()){
         $ordine = [
           "id" => $row['id'],
@@ -23,34 +29,41 @@ function showAll(){
         ];
         array_push($ordini, $ordine);
       }
+      // Memorizza gli ordini nella variabile di sessione
       $_SESSION['ordini'] = $ordini;
      
     } 
-  } else {
+  } else { // Se la query non ritorna dati, mostra un errore
     
       $_SESSION['errore'] = "Non ci sono prodotti nel sistema";
      
     
   }
 }
-
+/**
+ *  Funzione per mostrare gli ordini dell'utente specifico
+ */
 function showOrdiniUtente(){
   // Connessione al DB
   $connessione = new mysqli('localhost', 'root', 'root', 'db_tabacchi');
+  // Verifica se la connessione ha avuto successo
   if ($connessione->connect_error) {
     die("Errore di connessione: " . $connessione->connect_error);
   }
-
+ // Query per ottenere gli ordini dell'utente corrente
   $query = "SELECT id, utente,  prezzo, data FROM ordini WHERE utente=? ORDER BY data DESC";
+  // Prepara la query con un parametro (l'ID dell'utente)
   $stmt = $connessione->prepare($query);
 $stmt->bind_param("i", $_SESSION['id_user']);
 $stmt->execute();
+// Ottieni il risultato della query
 $result = $stmt->get_result();
   
 
     //verifica se sono presenti dati nella tabella
     if ($result->num_rows > 0) {
       $ordini = [];
+       // Estrai i dati dalla query e aggiungili all'array
       while ($row = $result->fetch_assoc()){
         $ordine = [
           "id" => $row['id'],
@@ -61,11 +74,12 @@ $result = $stmt->get_result();
         ];
         array_push($ordini, $ordine);
       }
+       // Memorizza gli ordini dell'utente nella variabile di sessione
       $_SESSION['ordini_utente'] = $ordini;
      
     } 
    else {
-    
+    // Se la query non ritorna dati, mostra un errore
       $_SESSION['errore'] = "Non ci sono prodotti nel sistema";
      
     

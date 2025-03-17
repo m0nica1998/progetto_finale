@@ -2,10 +2,10 @@
 <h3 class="text-center pt-3">Benvenuto, <?php echo $_SESSION['name']?></h3>
 
 <div class="col-6 d-flex align-items-center flex-column" >
-  <!-- Modal trigger button -->
+  <!-- Modale ordini bottone -->
 <button
   type="button"
-  class="btn btn-primary btn-lg"
+  class="btn btn-primary btn-lg mt-3"
   data-bs-toggle="modal"
   data-bs-target="#modalOrdiniUtenteId"
 >
@@ -21,8 +21,7 @@
 
 
 
-<!-- Modal Body -->
-<!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+ <!-- Modale per visualizzare gli ordini -->
 <div
   class="modal fade"
   id="modalOrdiniUtenteId"

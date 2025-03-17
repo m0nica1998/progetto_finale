@@ -76,7 +76,7 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $_SESSION['errore'] = "Esiste già un account con questa email!";
     $connessione->close();
-   header("Location: contatti.php");
+   header("Location: contatti.php"); // Reindirizzamento alla pagina contatti
    exit();
 }
 
@@ -88,8 +88,7 @@ $stmt_insert->bind_param("ssssssss", $nome, $eta, $data, $telefono, $genere, $re
 // Esegui l'inserimento dei dati nel database
 if ($stmt_insert->execute()) {
     $connessione->close();
-  //  session_unset();
-  //  session_destroy();
+ 
     
     $_SESSION['name'] = $nome;
     $_SESSION['is_admin'] = 0;
@@ -97,6 +96,6 @@ if ($stmt_insert->execute()) {
     exit();
 } else {
     $_SESSION['errore'] = "Errore nell'inserimento dei dati: " . $connessione->error;
-   header("Location: contatti.php");
+   header("Location: contatti.php"); // Reindirizzamento alla pagina contatti
   exit();
 }

@@ -1,14 +1,19 @@
 <?php 
+// Avvia la sessione per mantenere i dati dell'utente
 session_start();
-$tot_quantita = 0;
-$totale_carrello = 0;
-$tot_prodotto = 0;
-$title = 'CheckOut';
+// Inizializzazione delle variabili per il checkout
+$tot_quantita = 0; // Totale quantità prodotti nel carrello
+$totale_carrello = 0; // Totale costo del carrello
+$tot_prodotto = 0; // Totale costo di un singolo prodotto
+$title = 'Checkout';  // Titolo della pagina
+
+// Calcola il totale degli articoli nel carrello
 for($i = 0; $i< count($_SESSION['carrello']); $i++) {
     $tot_quantita += $_SESSION['carrello'][$i]['quantita'];
 }
 
-include 'header.php' ?>
+// Include l'header della pagina
+include 'header.php' ?> 
 
 <main class="main-checkout container ">
         <div class="text-center mb-4">
@@ -16,10 +21,12 @@ include 'header.php' ?>
             <h2>CHECKOUT</h2>
         </div>
         <div class="row">
+            <!-- Sezione per il modulo di fatturazione e pagamento -->
             <div class="col-md-8">
                 <div class="card p-4">
                     <form action="controller_ordini.php?action=create" method="post">
                         <h3>Indirizzo fatturazione</h3>
+                        <!-- Campi per l'inserimento dei dati di fatturazione -->
                         <div class="mb-3">
                             <label for="fname" class="form-label">Nome completo</label>
                             <input type="text" class="form-control" id="fname" name="firstname" placeholder="Mario Rossi">
@@ -47,7 +54,7 @@ include 'header.php' ?>
                             </div>
                         </div>
                         <h3 class="mt-4">Pagamento</h3>
-                       
+                       <!-- Campi per il pagamento -->
                         <div class="mb-3">
                             <label for="cname" class="form-label">Nome sulla carta</label>
                             <input type="text" class="form-control" id="cname" name="cardname" placeholder="Mario Rossi">
@@ -78,11 +85,14 @@ include 'header.php' ?>
                     </form>
                 </div>
             </div>
+            <!-- Sezione riepilogo carrello -->
             <div class="col-md-4">
                 <div class="card p-4">
                     <h4>Carrello <span class="float-end"><i class="fa fa-shopping-cart"></i> <b><?php echo $tot_quantita?></b></span></h4>
                     <?php for($i = 0; $i< count($_SESSION['carrello']); $i++): ?> 
-                    <?php $tot_prodotto = $_SESSION['carrello'][$i]['prezzo']* $_SESSION['carrello'][$i]['quantita'];
+                    <?php
+                     // Calcola il totale per ogni prodotto nel carrello
+                     $tot_prodotto = $_SESSION['carrello'][$i]['prezzo']* $_SESSION['carrello'][$i]['quantita'];
                     $totale_carrello += $tot_prodotto;
                      ?>
                     
@@ -96,4 +106,4 @@ include 'header.php' ?>
         </div>
 </main>
 
- <?php include 'footer.php' ?>
+ <?php include 'footer.php' //include il footer della pagina ?>

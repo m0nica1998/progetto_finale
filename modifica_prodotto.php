@@ -28,7 +28,7 @@ $prodotti[$id];
 ?>
 
 <main class="modifica-prodotto">
-   <!-- Inizio del form di modifica prodotto -->
+   <!-- Inizio del form di modifica prodotto, enctype è un attributo che definisce il tipo di codifica utilizzato per i dati del modulo quando vengono inviati tramite il metodo POST. -->
   <form action="controller_prodotti.php?action=edit&id=<?php echo  $prodotti[$id]['id'] ?>" method="post" enctype="multipart/form-data"
   >
     <!-- Campo per il nome del prodotto -->
