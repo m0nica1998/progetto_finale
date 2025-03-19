@@ -7,7 +7,7 @@ session_start();
 // Inizializza la variabile di sessione per gli errori
 $_SESSION['errore'] = "";
 
-// Recupero dati form, faccio in modo ceh i dati rimangano inseiti quando si compila parzialmente il form e si preme registrati
+// Recupero dati form, faccio in modo che i dati rimangano inseiti quando si compila parzialmente il form e si preme registrati
 $nome = $_POST['nome_completo'] ?? '';
 $_SESSION['nome_completo'] = isset($_POST['nome_completo']) ? $_POST['nome_completo'] : "";
 $eta = $_POST['eta'] ?? '';
@@ -32,7 +32,7 @@ $pattern_data = "#^(19[0-9]{2}|20[01][0-9]|202[0-4])-(0[1-9]|1[0-2])-(0[1-9]|[12
 $pattern_telefono = "/^(?:\+39\s?|0039\s?)?(3[1-9]\d{8}|0\d{1,3}\s?\d{5,10})$/";
 $pattern_password = "/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/";
 
-// Validazione dei dati inviati dal form
+// Validazione dei dati inviati dal form, preg_match() è una funzione che controlla se una stringa corrisponde a un'espressione regolare.
 if (empty($nome)) {
     $_SESSION['errore'] = "Il campo 'Nome e Cognome' è obbligatorio.";
 } elseif (empty($eta) || !preg_match($pattern_eta, $eta)) {
