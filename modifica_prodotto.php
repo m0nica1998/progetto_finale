@@ -1,6 +1,7 @@
 <?php
 // Avvia una sessione per gestire le variabili di sessione
 session_start();
+//titolo della pagina
 $title = "Modifica Prodotto";
 // Includi il file dell'header 
 include('header.php');
