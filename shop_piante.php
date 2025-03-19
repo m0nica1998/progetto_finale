@@ -2,16 +2,21 @@
 // Avvia una sessione per gestire variabili globali tra le pagine
 session_start();
 
+// Inizializza un array vuoto per i prodotti ricercati
 $prodotti_ricerca = [];
 if (isset($_SESSION['prodotti_ricerca'])) {
-    echo count($prodotti_ricerca);
-    echo  count($_SESSION['prodotti_ricerca']);
+   // Assegna a $prodotti_ricerca il valore della sessione e poi lo svuota
     $prodotti_ricerca = $_SESSION['prodotti_ricerca'];
     $_SESSION['prodotti_ricerca'] = [];
 } else {
+    // Se la sessione non esiste, inizializza comunque la variabile
     $_SESSION['prodotti_ricerca'] = [];
 }
-// Funzione che recupera i dati dei prodotti dal database e li divide in categorie
+
+/**
+ * Funzione che recupera i dati dei prodotti dal database e li divide in categorie
+ */
+
 function showPiante()
 {
 

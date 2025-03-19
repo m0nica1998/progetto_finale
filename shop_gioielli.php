@@ -2,18 +2,22 @@
 // Avvia una sessione per gestire variabili globali tra le pagine
 session_start();
 
+// Inizializza un array vuoto per i prodotti ricercati
 $prodotti_ricerca = [];
 if(isset($_SESSION['prodotti_ricerca'])) { 
-    echo count($prodotti_ricerca);
-    echo  count($_SESSION['prodotti_ricerca']);
+   // Assegna a $prodotti_ricerca il valore della sessione e poi lo svuota
     $prodotti_ricerca = $_SESSION['prodotti_ricerca'];
     $_SESSION['prodotti_ricerca'] = [];
    
 } else { 
+    // Se la sessione non esiste, inizializza comunque la variabile
     $_SESSION['prodotti_ricerca']= []; 
     
 } 
-// Funzione che recupera i dati dei prodotti dal database e li divide in categorie
+/**
+ *  Funzione che recupera i dati dei prodotti dal database e li divide in categorie
+ */
+
 function showGioielli()
 {
 
@@ -91,7 +95,7 @@ function showGioielli()
     }
 }
 
-// Chiamata alla funzione per recuperare i dati delle piante
+// Chiamata alla funzione per recuperare i dati dei gioielli
 showGioielli();
 
 
@@ -105,7 +109,7 @@ include 'header.php'; ?>
         <div class="row">
             <?php if(count($prodotti_ricerca) >0) : ?>
             <?php 
-            // Ciclo su tutti i prodotti di tipo "piante" salvati in sessione
+            // Ciclo su tutti i prodotti di tipo "gioielli" salvati in sessione
             for ($i = 0; $i < count($prodotti_ricerca); $i++): ?>
             
                 <div class="col-sm col-md-3 col-lg-3 d-flex flex-column mt-4">
