@@ -41,7 +41,7 @@
                         <button class="btn search" type="submit">Cerca</button>
                     </form>
                 <?php endif; ?>
-                <!-- ulsant eper resettare la ricerca -->
+                <!-- pulsante per resettare la ricerca -->
                 <?php if (($title == 'Shop Piante' || $title == 'Shop Borse' || $title == 'Shop Gioielli')  && count($prodotti_ricerca) > 0) : ?>
                     <form action="controller_prodotti.php?action=reset_search&type=<?php if ($title == 'Shop Piante') {
                                                                                         echo 'Piante';
