@@ -31,7 +31,7 @@ function create_ordine()
   // Calcola il totale dell'ordine e prepara i dati dei prodotti
   foreach ($carrello as $prodotto) {
     $totale += $prodotto['prezzo'] * $prodotto['quantita']; // Somma il costo totale
-    // crea l'array associativo $mappa prodotto e lo aggiunge alla fine dell'array $id_prodotto
+    // crea l'array associativo $mappa_prodotto e lo aggiunge alla fine dell'array $id_prodotti
     array_push($id_prodotti, $mappa_prodotto = ['id' => $prodotto['id'], 'quantita' => $prodotto['quantita'], 'disp_magazzino' => $prodotto['disp_magazzino']]);
   }
 
