@@ -69,7 +69,7 @@ function create_ordine()
         die("Errore nella preparazione della query: " . $connessione->error);
       }
      
-     // Inserisce ogni prodotto dell'ordine nella tabella `prodotti_ordini`
+     // Inserisce ogni prodotto dell'ordine nella tabella `prodotti_ordini`, si fa il foreach per recuperare id_prodotto che mi permette di ottenere tutti gli altri parametri del prodotto
       foreach ($id_prodotti as $id_prodotto) {
         
         $stmt->bind_param("iii", $id_ordine, $id_prodotto['id'], $id_prodotto['quantita']);
