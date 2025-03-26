@@ -17,17 +17,15 @@ include 'header.php' ?>
         
         <?php 
         // Controlla se l'utente è loggato (verifica se la variabile di sessione 'name' non è vuota)
-        if($_SESSION['name'] != "") : ?>
+        if($_SESSION['name'] != "") :   ?>
         
          <!-- Se il carrello non è vuoto, mostra la tabella -->
           <?php if(isset($_SESSION['carrello']) && $_SESSION['carrello'] != []) : ?>
 
           <div
-            class="table-responsive"
-          >
+            class="table-responsive">
             <table
-                class="table table-primary"
-            >
+                class="table table-primary">
                 <thead>
                     <tr>
                         <th scope="col"></th>
@@ -48,7 +46,7 @@ include 'header.php' ?>
                      $totale_prezzo_prodotto = $_SESSION["carrello"][$i]['prezzo'] * $_SESSION["carrello"][$i]['quantita']; 
                     $totale_carrello += $totale_prezzo_prodotto; // Aggiorna il totale complessivo del carrello
                     ?>
-                    ?>
+                    
                 <tbody>
                     <tr class="">
                         <td scope="row">
